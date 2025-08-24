@@ -1,25 +1,91 @@
-# Git & GitHub Complete Guide
+git_github_guide:
+  title: "Git & GitHub Step by Step (VS Code / CMD)"
+  description: "Ye guide aapko Git aur GitHub ka complete process step by step samjhaata hai jaise aap VS Code me kaam kar rahe ho."
+  steps:
+    - step: 1
+      title: "GitHub Account Aur Repository Banaye"
+      actions:
+        - "GitHub par login karo"
+        - "New Repository create karo"
+        - "Name: MyProject (ya jo bhi chaho)"
+        - "Public/Private choose karo"
+        - "Initialize with README ✅"
+      analogy: "Notebook create kar liya, jisme aap homework rakhenge"
 
-Ye guide aapko Git aur GitHub ka complete step-by-step process samjhaati hai jaise aap apni laptop par VS Code me kaam kar rahe ho.
+    - step: 2
+      title: "Git Install Aur Setup"
+      actions:
+        - "Git install karo: https://git-scm.com/"
+        - "CMD / VS Code terminal me check karo: git --version"
+        - "Apna naam configure karo: git config --global user.name 'Haroon'"
+        - "Apna email configure karo: git config --global user.email 'haroon@example.com'"
+      analogy: "Notebook me apna naam aur ID likh di"
 
-1. GitHub par login karo aur “New Repository” create karo. Name: MyProject (ya jo bhi chaho), Public/Private choose karo, Initialize with README ✅. Ye aapki notebook create karne ke barabar hai jisme aap homework rakhenge.
+    - step: 3
+      title: "Repository Clone Karna"
+      commands:
+        - "git clone https://github.com/username/MyProject.git"
+        - "cd MyProject"
+      analogy: "Notebook ka copy apne laptop par la liya"
 
-2. Git install karo: https://git-scm.com/ . CMD/Terminal me check karo git --version. Apna naam aur email configure karo: git config --global user.name "Haroon" aur git config --global user.email "haroon@example.com". Ye notebook me apna naam aur ID likhne ke barabar hai.
+    - step: 4
+      title: "Nayi Branch Banao Aur Switch Karo"
+      commands:
+        - "git branch feature-login   # Nayi branch banai"
+        - "git checkout feature-login # Us branch par switch kiya"
+      analogy: "Extra page banaya notebook me aur uspe kaam shuru kiya"
 
-3. Repository clone karo: git clone https://github.com/username/MyProject.git aur cd MyProject. Ye notebook ka copy apne laptop par laane ke barabar hai.
+    - step: 5
+      title: "Changes Karo Aur Commit Karo"
+      actions:
+        - "Apna text/file edit karo ya naya file add karo"
+      commands:
+        - "git add ."
+        - "git commit -m 'Added login feature'"
+      analogy: "Homework ready ho gaya, sticky note lagaya ke ready hai"
 
-4. Nayi branch banao aur switch karo: git branch feature-login aur git checkout feature-login. Ye extra page banane ke barabar hai aur uspe kaam shuru karna.
+    - step: 6
+      title: "Branch GitHub Par Push Karo"
+      commands:
+        - "git push origin feature-login"
+      analogy: "Page teacher ko online dikhaya"
 
-5. Apna text ya code file edit karo ya naya file add karo. Changes stage karo: git add . aur commit karo: git commit -m "Added login feature". Ye homework ready karne aur sticky note lagane ke barabar hai.
+    - step: 7
+      title: "Pull Request (PR) Banana"
+      actions:
+        - "GitHub website par repository open karo"
+        - "Compare & Pull Request par click karo"
+        - "Message likho: 'Added login feature'"
+        - "Submit PR"
+      analogy: "Teacher se poochha: ‘Mera homework theek hai, main notebook me add kar doon?’"
 
-6. Branch GitHub par push karo: git push origin feature-login. Ye page teacher ko online dikhane ke barabar hai.
+    - step: 8
+      title: "PR Review Aur Merge"
+      actions:
+        - "Team ya teacher review karenge"
+        - "Agar approve ho gaya, Merge PR button click karo"
+      analogy: "Teacher ne homework check karke main notebook me paste kar diya"
 
-7. Pull Request (PR) GitHub website par banao: repository open karo, “Compare & Pull Request” par click karo, message likho “Added login feature”, submit PR. Ye teacher se poochhne ke barabar hai: “Mera homework theek hai, main notebook me add kar doon?”
+    - step: 9
+      title: "Branch Delete (Optional)"
+      commands:
+        - "git branch -d feature-login"
+      analogy: "Extra page hata diya, kyunki kaam main notebook me aa gaya"
 
-8. PR review aur merge: Team ya teacher check karenge. Agar approve ho gaya, to Merge PR button click karo. Ye teacher ne homework check karke main notebook me paste karne ke barabar hai.
+  full_flow_summary:
+    - "Repository clone karo"
+    - "Nayi branch banao"
+    - "Code changes karo"
+    - "Changes stage aur commit karo"
+    - "Branch GitHub par push karo"
+    - "Pull Request create karo"
+    - "PR review aur merge"
+    - "Branch delete karo (optional)"
+    - "Naye features add karne ke liye step 4 se repeat karo"
 
-9. Branch delete (optional): git branch -d feature-login. Ye extra page hata dene ke barabar hai kyunki kaam main notebook me aa gaya.
-
-10. Full flow summary: Repository clone karo → Nayi branch banao → Code changes karo → Changes stage aur commit karo → Branch GitHub par push karo → Pull Request create karo → PR review aur merge → Branch delete (optional). Naye features add karne ke liye step 4 se repeat karo.
-
-11. Example merge notification: Merge pull request #1 from itxHaroonKhan/feature-login. Ye batata hai ki feature-login branch ka code main branch me merge ho gaya. #1 = pull request number, itxHaroonKhan/feature-login = username aur branch ka naam. Ye teacher ne homework approve karke main notebook me paste karne ke barabar hai.
+  example_merge_notification:
+    text: "Merge pull request #1 from itxHaroonKhan/feature-login"
+    explanation:
+      - "#1 = pull request number"
+      - "itxHaroonKhan/feature-login = username aur branch ka naam"
+      - "Teacher ne homework approve karke main notebook me paste kar diya"
