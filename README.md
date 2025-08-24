@@ -152,3 +152,93 @@ Merge pull request #1 from itxHaroonKhan/feature-login
 
 ---
 
+# Git & GitHub Guide: Branches, PR, PR Review
+
+Ye guide aapko **Branches, Pull Requests (PR), aur PR Review** ke concepts aur commands step by step samjhaata hai.
+
+---
+
+## Branches
+
+Branches Git ka feature hai jisme aap **main project se alag ek copy** bana ke kaam karte ho.
+
+### Commands:
+```bash
+git branch                    # Sab branches list karo
+git branch feature-login      # Nayi branch banai
+git checkout feature-login    # Us branch par switch kiya
+git checkout -b feature-login # Branch banate hi us par switch kar do
+git branch -d feature-login   # Branch delete karo (optional)
+````
+
+💡 Analogy: “Notebook me extra page banaya aur uspe naya kaam shuru kiya.”
+
+---
+
+## Pull Request (PR)
+
+Pull Request (PR) ek request hai jo aap **apni branch ka code main branch me merge karne ke liye** bhejte ho.
+
+### Steps:
+
+1. GitHub par repository open karo.
+2. “Compare & Pull Request” par click karo.
+3. PR message likho jaise: `"Added login feature"`
+4. Submit PR
+
+### Commands (local se push karna):
+
+```bash
+git add .
+git commit -m "Added login feature"
+git push origin feature-login
+```
+
+💡 Analogy: “Teacher se poochha: ‘Mera homework theek hai, main notebook me add kar doon?’”
+
+---
+
+## PR Review
+
+PR Review me team ya reviewer aapke code ko **check karte hai**.
+
+* Agar sab sahi ho, approve karte hai.
+* Fir merge kar sakte ho main branch me.
+
+### Example Merge Command (local se update lene ke liye):
+
+```bash
+git checkout main
+git pull origin main
+```
+
+### Example GitHub Merge Notification:
+
+```
+Merge pull request #1 from itxHaroonKhan/feature-login
+```
+
+* `#1` = Pull Request number
+* `itxHaroonKhan/feature-login` = username aur branch ka naam
+
+💡 Analogy: “Teacher ne homework check karke main notebook me paste kar diya.”
+
+```
+
+---
+
+✅ **Kaise use kare:**
+
+1. VS Code me naya file create karo.  
+2. Naam rakho: `README.md`  
+3. Upar wala content paste karo.  
+4. Save karo.  
+5. VS Code me Markdown preview (`Ctrl+Shift+V`) se steps aur commands easily dekh sakte ho.
+
+---
+
+Agar chaho, mai **ye complete Git + GitHub workflow (Branches, PR, PR Review + full commands + examples)** ek **full README ready-to-use version** bhi bana doon, jisme sab commands aur steps ek saath ho, jisse aap class me dikha sako aur practice bhi kar sako.  
+
+Chahte ho mai wo bana doon?
+```
+
