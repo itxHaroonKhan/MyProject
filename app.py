@@ -98,8 +98,7 @@ window.resizeTo(800, 600);
     },
 ]
 
-# Cache shuffled quiz
-@st.cache_data
+# Shuffle quiz without caching to avoid issues
 def shuffle_quiz(_quiz):
     shuffled = random.sample(_quiz, len(_quiz))
     for q in shuffled:
@@ -132,9 +131,13 @@ if "quiz_data" not in st.session_state:
         "pause_time": None
     })
 
+# Debug session state
+st.write("Debug: Session State Initialized", st.session_state)
+
 # Theme toggle
 def toggle_theme():
     st.session_state.theme = "light" if st.session_state.theme == "dark" else "dark"
+    st.rerun()
 
 # Timer logic
 def update_timer():
@@ -143,6 +146,7 @@ def update_timer():
         st.session_state.time_left = max(3600 - elapsed, 0)
         if st.session_state.time_left <= 0:
             st.session_state.show_results = True
+            st.rerun()
 
 # Pause/Resume quiz
 def toggle_pause():
@@ -175,65 +179,52 @@ def reset_quiz():
     })
     st.rerun()
 
-# CSS for enhanced UI
+# Simplified CSS
 st.markdown("""
 <style>
 body {
     background: var(--bg-gradient);
     color: var(--text-color);
-    font-family: 'Inter', 'Arial', sans-serif;
-    transition: all 0.3s ease;
+    font-family: 'Arial', sans-serif;
 }
 :root {
     --bg-gradient: linear-gradient(180deg, #1a1a3b, #2c2c54);
     --bg-container: #2c2c54;
     --text-color: #ffffff;
-    --button-bg: linear-gradient(45deg, #6b21a8, #a855f7);
-    --button-hover: linear-gradient(45deg, #8b5cf6, #c084fc);
+    --button-bg: #6b21a8;
+    --button-hover: #8b5cf6;
     --code-bg: #1e1e1e;
-    --shadow: rgba(0,0,0,0.3);
 }
 [data-theme="light"] {
     --bg-gradient: linear-gradient(180deg, #e0e7ff, #f3e8ff);
     --bg-container: #ffffff;
     --text-color: #1f2937;
-    --button-bg: linear-gradient(45deg, #4f46e5, #7c3aed);
-    --button-hover: linear-gradient(45deg, #6366f1, #a78bfa);
+    --button-bg: #4f46e5;
+    --button-hover: #6366f1;
     --code-bg: #f1f5f9;
-    --shadow: rgba(0,0,0,0.1);
 }
 .main-container {
     background: var(--bg-container);
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 8px 25px var(--shadow);
-    max-width: 900px;
-    margin: 1.5rem auto;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    max-width: 800px;
+    margin: 1rem auto;
 }
 .stButton>button {
     background: var(--button-bg);
     color: var(--text-color);
     border: none;
-    border-radius: 0.625rem;
-    padding: 0.75rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
     width: 100%;
     font-size: 1rem;
-    font-weight: 600;
-    margin: 0.375rem 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    margin: 0.2rem 0;
 }
-.stButton>button:hover:not(:disabled) {
+.stButton>button:hover {
     background: var(--button-hover);
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px var(--shadow);
 }
 .stButton>button:disabled {
     background: #6b7280;
-    cursor: not-allowed;
-}
-.stButton>button:focus {
-    outline: 2px solid #a855f7;
 }
 .selected-correct {
     background: #34c759 !important;
@@ -243,250 +234,183 @@ body {
 }
 .question-container {
     background: var(--bg-container);
-    padding: 1.5rem;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 12px var(--shadow);
+    padding: 1rem;
+    border-radius: 0.5rem;
     margin-bottom: 1rem;
 }
 .feedback-correct {
     color: #34c759;
-    font-weight: 600;
-    font-size: 1.125rem;
-    margin: 1rem 0;
-    animation: fadeIn 0.5s ease;
+    font-weight: bold;
+    margin: 0.5rem 0;
 }
 .feedback-wrong {
     color: #ff3b30;
-    font-weight: 600;
-    font-size: 1.125rem;
-    margin: 1rem 0;
-    animation: fadeIn 0.5s ease;
+    font-weight: bold;
+    margin: 0.5rem 0;
 }
 .progress-bar {
     background: #4b4b6b;
-    border-radius: 0.625rem;
-    height: 0.75rem;
-    margin: 0.625rem 0;
-    position: relative;
+    border-radius: 0.5rem;
+    height: 0.5rem;
+    margin: 0.5rem 0;
 }
 .progress-fill {
     background: var(--button-bg);
     height: 100%;
-    border-radius: 0.625rem;
-    transition: width 0.5s ease;
+    border-radius: 0.5rem;
 }
 .progress-text {
-    position: absolute;
-    top: -1.25rem;
-    right: 0;
     color: var(--text-color);
     font-size: 0.75rem;
 }
 .title {
-    font-size: 2.25rem;
+    font-size: 1.5rem;
     text-align: center;
-    margin-bottom: 0.5rem;
     color: var(--text-color);
-}
-.caption {
-    text-align: center;
-    color: #b0b0d0;
-    font-size: 1rem;
-    margin-bottom: 1.25rem;
 }
 .timer {
     font-size: 1rem;
     color: #ff6b6b;
-    font-weight: 600;
     text-align: center;
-    margin-top: 0.625rem;
 }
 .difficulty {
     font-size: 0.875rem;
     color: #b0b0d0;
-    margin-bottom: 0.625rem;
 }
-.stCodeBlock, .stCodeBlock pre, .stCodeBlock code {
+.stCodeBlock {
     background-color: var(--code-bg) !important;
     border-radius: 0.5rem;
-    padding: 1rem;
-    font-family: 'Consolas', 'Monaco', monospace;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    border: 1px solid #4b4b6b;
-    color: var(--text-color);
-}
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-@media (max-width: 600px) {
-    .main-container {
-        padding: 1rem;
-        margin: 0.625rem;
-    }
-    .title {
-        font-size: 1.75rem;
-    }
-    .stButton>button {
-        font-size: 0.875rem;
-        padding: 0.5rem;
-    }
+    padding: 0.5rem;
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-<script>
-function triggerConfetti() {
-    confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-    });
-}
-</script>
 """, unsafe_allow_html=True)
 
 # Main UI
-st.markdown(f'<div class="main-container" data-theme="{st.session_state.theme}" role="main">', unsafe_allow_html=True)
-st.markdown('<h1 class="title">🚀 JavaScript Mastery Quiz</h1>', unsafe_allow_html=True)
-st.markdown('<p class="caption">Challenge Your JavaScript Expertise!</p>', unsafe_allow_html=True)
+try:
+    st.markdown(f'<div class="main-container" data-theme="{st.session_state.theme}">', unsafe_allow_html=True)
+    st.markdown('<h1 class="title">JavaScript Quiz</h1>', unsafe_allow_html=True)
 
-# Theme toggle button
-if st.button("🌙 Toggle Theme", key=f"theme_toggle_{uuid.uuid4()}"):
-    toggle_theme()
-    st.rerun()
+    # Theme toggle
+    if st.button("Toggle Theme"):
+        toggle_theme()
 
-# Welcome screen
-if not st.session_state.started:
-    st.markdown("""
-    <div style="text-align: center;">
-        <p style="color: var(--text-color); font-size: 1.125rem;">Test your JavaScript skills with 10 comprehensive questions!</p>
-        <p style="color: #b0b0d0;">60 minutes, 2 points per correct answer. Ready?</p>
-    </div>
-    """, unsafe_allow_html=True)
-    if st.button("Start Quiz", key=f"start_quiz_{uuid.uuid4()}"):
-        st.session_state.started = True
-        st.session_state.start_time = datetime.now()
-        st.rerun()
-else:
-    # Timer
-    if not st.session_state.show_results and not st.session_state.paused:
-        update_timer()
-        minutes = int(st.session_state.time_left // 60)
-        seconds = int(st.session_state.time_left % 60)
-        st.markdown(f'<div class="timer" role="timer">⏰ Time Left: {minutes:02d}:{seconds:02d}</div>', unsafe_allow_html=True)
-
-    # Pause/Resume button
-    pause_label = "Pause Quiz" if not st.session_state.paused else "Resume Quiz"
-    if st.button(pause_label, key=f"pause_quiz_{uuid.uuid4()}"):
-        toggle_pause()
-
-    # Reset button
-    if st.button("Reset Quiz", key=f"reset_quiz_{uuid.uuid4()}"):
-        reset_quiz()
-
-    if not st.session_state.quiz_data:
-        st.error("No quiz questions available.")
-        st.stop()
-
-    # Progress bar
-    total_questions = len(st.session_state.quiz_data)
-    current_q = min(st.session_state.current_q, total_questions - 1)
-    progress = (current_q / total_questions) * 100 if total_questions > 0 else 0
-    st.markdown(f"""
-    <div class="progress-bar" role="progressbar" aria-valuenow="{progress:.1f}" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-fill" style="width: {progress:.1f}%"></div>
-        <div class="progress-text">{progress:.1f}%</div>
-    </div>
-    <div style="color: var(--text-color); font-size: 0.8125rem; text-align: center;">
-        Question {current_q + 1} of {total_questions}
-    </div>
-    """, unsafe_allow_html=True)
-
-    if not st.session_state.show_results:
-        with st.container():
-            st.markdown('<div class="question-container" role="region" aria-label="Question">', unsafe_allow_html=True)
-            q = st.session_state.quiz_data[current_q]
-
-            # Display difficulty and streak
-            st.markdown(f'<div class="difficulty">Difficulty: {q["difficulty"]} | Streak: 🔥 {st.session_state.streak}</div>', unsafe_allow_html=True)
-            st.markdown(q["question"], unsafe_allow_html=True)
-
-            # Display options
-            for option in q["display_options"]:
-                button_style = ""
-                if st.session_state.selected_option == option:
-                    button_style = "selected-correct" if option == q["answer"] else "selected-wrong"
-                if st.button(option, key=f"option_{q['id']}_{option}", help="Select this option"):
-                    st.session_state.selected_option = option
-                    is_correct = option == q["answer"]
-                    st.session_state.feedback = (
-                        f'<div class="feedback-correct">Correct! {q["explanation"]}</div>'
-                        if is_correct
-                        else f'<div class="feedback-wrong">Incorrect. {q["explanation"]}</div>'
-                    )
-                    if is_correct:
-                        st.session_state.score += 2
-                        st.session_state.streak += 1
-                        st.session_state.max_streak = max(st.session_state.streak, st.session_state.max_streak)
-                        # Trigger confetti for correct answer
-                        st.markdown("""
-                        <script>
-                        if (typeof confetti === 'function') {
-                            confetti({
-                                particleCount: 100,
-                                spread: 70,
-                                origin: { y: 0.6 }
-                            });
-                        }
-                        </script>
-                        """, unsafe_allow_html=True)
-                    else:
-                        st.session_state.streak = 0
-                    st.session_state.answers[current_q] = option
-                    st.rerun()
-
-            # Display feedback
-            if st.session_state.feedback:
-                st.markdown(st.session_state.feedback, unsafe_allow_html=True)
-
-            # Next button (only shown if an option is selected)
-            if st.session_state.selected_option and st.button("Next Question", key=f"next_{q['id']}"):
-                st.session_state.current_q += 1
-                if st.session_state.current_q >= total_questions:
-                    st.session_state.show_results = True
-                st.session_state.selected_option = None
-                st.session_state.feedback = None
-                st.rerun()
-
-            # Previous button (only shown if not on the first question)
-            if current_q > 0 and st.button("Previous Question", key=f"prev_{q['id']}"):
-                st.session_state.current_q -= 1
-                st.session_state.selected_option = None
-                st.session_state.feedback = None
-                st.rerun()
-
-            st.markdown('</div>', unsafe_allow_html=True)
+    # Welcome screen
+    if not st.session_state.started:
+        st.write("Debug: Showing welcome screen")
+        st.markdown("Test your JavaScript skills with 10 questions! 60 minutes, 2 points per correct answer.")
+        if st.button("Start Quiz"):
+            st.write("Debug: Start Quiz button clicked")
+            st.session_state.started = True
+            st.session_state.start_time = datetime.now()
+            st.rerun()
     else:
-        # Results screen
-        st.markdown(f"""
-        <div style="text-align: center; color: var(--text-color);">
-            <h2>Quiz Completed!</h2>
-            <p>Score: {st.session_state.score} / {total_questions * 2}</p>
-            <p>Max Streak: 🔥 {st.session_state.max_streak}</p>
-        </div>
-        """, unsafe_allow_html=True)
-        for i, (q, ans) in enumerate(zip(st.session_state.quiz_data, st.session_state.answers)):
-            st.markdown(f"""
-            <div class="question-container">
-                <div class="difficulty">Question {i + 1} ({q["difficulty"]})</div>
-                {q["question"]}
-                <p><strong>Your Answer:</strong> {ans or "Not answered"}</p>
-                <p><strong>Correct Answer:</strong> {q["answer"]}</p>
-                <p>{q["explanation"]}</p>
-            </div>
-            """, unsafe_allow_html=True)
-        if st.button("Restart Quiz", key="restart_quiz"):
+        # Timer
+        if not st.session_state.show_results and not st.session_state.paused:
+            update_timer()
+            minutes = int(st.session_state.time_left // 60)
+            seconds = int(st.session_state.time_left % 60)
+            st.markdown(f'<div class="timer">Time Left: {minutes:02d}:{seconds:02d}</div>', unsafe_allow_html=True)
+
+        # Pause/Resume and Reset buttons
+        pause_label = "Pause Quiz" if not st.session_state.paused else "Resume Quiz"
+        if st.button(pause_label):
+            toggle_pause()
+        if st.button("Reset Quiz"):
             reset_quiz()
 
-st.markdown('</div>', unsafe_allow_html=True)
+        if not st.session_state.quiz_data:
+            st.error("No quiz questions available.")
+            st.stop()
+
+        # Progress bar
+        total_questions = len(st.session_state.quiz_data)
+        current_q = min(st.session_state.current_q, total_questions - 1)
+        progress = (current_q / total_questions) * 100 if total_questions > 0 else 0
+        st.markdown(f"""
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: {progress:.1f}%"></div>
+            <div class="progress-text">{progress:.1f}%</div>
+        </div>
+        <div style="text-align: center;">Question {current_q + 1} of {total_questions}</div>
+        """, unsafe_allow_html=True)
+
+        if not st.session_state.show_results:
+            with st.container():
+                st.markdown('<div class="question-container">', unsafe_allow_html=True)
+                q = st.session_state.quiz_data[current_q]
+
+                # Display question
+                st.markdown(f'<div class="difficulty">Difficulty: {q["difficulty"]} | Streak: {st.session_state.streak}</div>', unsafe_allow_html=True)
+                st.markdown(q["question"], unsafe_allow_html=True)
+
+                # Display options
+                for option in q["display_options"]:
+                    button_style = ""
+                    if st.session_state.selected_option == option:
+                        button_style = "selected-correct" if option == q["answer"] else "selected-wrong"
+                    if st.button(option, key=f"option_{q['id']}_{option}"):
+                        st.write("Debug: Option selected", option)
+                        st.session_state.selected_option = option
+                        is_correct = option == q["answer"]
+                        st.session_state.feedback = (
+                            f'<div class="feedback-correct">Correct! {q["explanation"]}</div>'
+                            if is_correct
+                            else f'<div class="feedback-wrong">Incorrect. {q["explanation"]}</div>'
+                        )
+                        if is_correct:
+                            st.session_state.score += 2
+                            st.session_state.streak += 1
+                            st.session_state.max_streak = max(st.session_state.streak, st.session_state.max_streak)
+                        else:
+                            st.session_state.streak = 0
+                        st.session_state.answers[current_q] = option
+                        st.rerun()
+
+                # Display feedback
+                if st.session_state.feedback:
+                    st.markdown(st.session_state.feedback, unsafe_allow_html=True)
+
+                # Next/Previous buttons
+                col1, col2 = st.columns(2)
+                with col1:
+                    if current_q > 0 and st.button("Previous"):
+                        st.session_state.current_q -= 1
+                        st.session_state.selected_option = None
+                        st.session_state.feedback = None
+                        st.rerun()
+                with col2:
+                    if st.session_state.selected_option and st.button("Next"):
+                        st.session_state.current_q += 1
+                        if st.session_state.current_q >= total_questions:
+                            st.session_state.show_results = True
+                        st.session_state.selected_option = None
+                        st.session_state.feedback = None
+                        st.rerun()
+
+                st.markdown('</div>', unsafe_allow_html=True)
+        else:
+            # Results screen
+            st.markdown(f"""
+            <div style="text-align: center;">
+                <h2>Quiz Completed!</h2>
+                <p>Score: {st.session_state.score} / {total_questions * 2}</p>
+                <p>Max Streak: {st.session_state.max_streak}</p>
+            </div>
+            """, unsafe_allow_html=True)
+            for i, (q, ans) in enumerate(zip(st.session_state.quiz_data, st.session_state.answers)):
+                st.markdown(f"""
+                <div class="question-container">
+                    <div>Question {i + 1} ({q["difficulty"]})</div>
+                    {q["question"]}
+                    <p><strong>Your Answer:</strong> {ans or "Not answered"}</p>
+                    <p><strong>Correct Answer:</strong> {q["answer"]}</p>
+                    <p>{q["explanation"]}</p>
+                </div>
+                """, unsafe_allow_html=True)
+            if st.button("Restart Quiz"):
+                reset_quiz()
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+except Exception as e:
+    st.error(f"Error: {str(e)}")
