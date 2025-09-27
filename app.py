@@ -3,16 +3,16 @@ import random
 from datetime import datetime, timedelta
 import uuid
 
-# Quiz data (unchanged, assuming it's correct)
+# Quiz data (abridged for brevity; include your full quiz list)
 quiz = [
     {
-        "question": "What is the output of: ```javascript\nfunction test() { var x = 1; if (true) { var x = 2; } return x; }\nconsole.log(test());```",
+        "question": "What is the output of: ```javascript
         "options": ["2", "1", "undefined", "ReferenceError"],
         "answer": "2",
         "difficulty": "Medium",
         "explanation": "The 'var' keyword is function-scoped, so the inner 'var x = 2' reassigns the same variable, returning 2."
     },
-    # ... (other quiz questions unchanged for brevity; ensure all questions are included)
+    # ... (other questions)
 ]
 
 # Cache shuffled quiz
@@ -40,7 +40,7 @@ if "quiz_data" not in st.session_state:
         "show_results": False,
         "selected_option": None,
         "feedback": None,
-        "time_left": 3600,  # 60 minutes
+        "time_left": 3600,
         "theme": "dark",
         "streak": 0,
         "max_streak": 0,
@@ -64,12 +64,10 @@ def update_timer():
 # Pause/Resume quiz
 def toggle_pause():
     if st.session_state.paused:
-        # Resume: adjust start_time to account for pause duration
         pause_duration = (datetime.now() - st.session_state.pause_time).total_seconds()
         st.session_state.start_time = st.session_state.start_time + timedelta(seconds=pause_duration)
         st.session_state.paused = False
     else:
-        # Pause
         st.session_state.paused = True
         st.session_state.pause_time = datetime.now()
     st.rerun()
@@ -93,167 +91,7 @@ def reset_quiz():
         "pause_time": None
     })
 
-# CSS for enhanced UI
-st.markdown("""
-<style>
-body {
-    background: var(--bg-gradient);
-    color: var(--text-color);
-    font-family: 'Inter', 'Arial', sans-serif;
-    transition: all 0.3s ease;
-}
-:root {
-    --bg-gradient: linear-gradient(180deg, #1a1a3b, #2c2c54);
-    --bg-container: #2c2c54;
-    --text-color: #ffffff;
-    --button-bg: linear-gradient(45deg, #6b21a8, #a855f7);
-    --button-hover: linear-gradient(45deg, #8b5cf6, #c084fc);
-    --code-bg: #1e1e1e;
-    --shadow: rgba(0,0,0,0.3);
-}
-[data-theme="light"] {
-    --bg-gradient: linear-gradient(180deg, #e0e7ff, #f3e8ff);
-    --bg-container: #ffffff;
-    --text-color: #1f2937;
-    --button-bg: linear-gradient(45deg, #4f46e5, #7c3aed);
-    --button-hover: linear-gradient(45deg, #6366f1, #a78bfa);
-    --code-bg: #f1f5f9;
-    --shadow: rgba(0,0,0,0.1);
-}
-.main-container {
-    background: var(--bg-container);
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 8px 25px var(--shadow);
-    max-width: 900px;
-    margin: 1.5rem auto;
-}
-.stButton>button {
-    background: var(--button-bg);
-    color: var(--text-color);
-    border: none;
-    border-radius: 0.625rem;
-    padding: 0.75rem;
-    width: 100%;
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0.375rem 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.stButton>button:hover:not(:disabled) {
-    background: var(--button-hover);
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px var(--shadow);
-}
-.stButton>button:disabled {
-    background: #6b7280;
-    cursor: not-allowed;
-}
-.stButton>button:focus {
-    outline: 2px solid #a855f7;
-}
-.selected-correct {
-    background: #34c759 !important;
-}
-.selected-wrong {
-    background: #ff3b30 !important;
-}
-.question-container {
-    background: var(--bg-container);
-    padding: 1.5rem;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 12px var(--shadow);
-    margin-bottom: 1rem;
-}
-.feedback-correct {
-    color: #34c759;
-    font-weight: 600;
-    font-size: 1.125rem;
-    margin: 1rem 0;
-    animation: fadeIn 0.5s ease;
-}
-.feedback-wrong {
-    color: #ff3b30;
-    font-weight: 600;
-    font-size: 1.125rem;
-    margin: 1rem 0;
-    animation: fadeIn 0.5s ease;
-}
-.progress-bar {
-    background: #4b4b6b;
-    border-radius: 0.625rem;
-    height: 0.75rem;
-    margin: 0.625rem 0;
-    position: relative;
-}
-.progress-fill {
-    background: var(--button-bg);
-    height: 100%;
-    border-radius: 0.625rem;
-    transition: width 0.5s ease;
-}
-.progress-text {
-    position: absolute;
-    top: -1.25rem;
-    right: 0;
-    color: var(--text-color);
-    font-size: 0.75rem;
-}
-.title {
-    font-size: 2.25rem;
-    text-align: center;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-}
-.caption {
-    text-align: center;
-    color: #b0b0d0;
-    font-size: 1rem;
-    margin-bottom: 1.25rem;
-}
-.timer {
-    font-size: 1rem;
-    color: #ff6b6b;
-    font-weight: 600;
-    text-align: center;
-    margin-top: 0.625rem;
-}
-.difficulty {
-    font-size: 0.875rem;
-    color: #b0b0d0;
-    margin-bottom: 0.625rem;
-}
-.stCodeBlock, .stCodeBlock pre, .stCodeBlock code {
-    background-color: var(--code-bg) !important;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    font-family: 'Consolas', 'Monaco', monospace;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    border: 1px solid #4b4b6b;
-    color: var(--text-color);
-}
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-@media (max-width: 600px) {
-    .main-container {
-        padding: 1rem;
-        margin: 0.625rem;
-    }
-    .title {
-        font-size: 1.75rem;
-    }
-    .stButton>button {
-        font-size: 0.875rem;
-        padding: 0.5rem;
-    }
-}
-</style>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-""", unsafe_allow_html=True)
+# CSS (unchanged for brevity; use the CSS from previous response)
 
 # Main UI
 st.markdown(f'<div class="main-container" data-theme="{st.session_state.theme}" role="main">', unsafe_allow_html=True)
@@ -296,7 +134,7 @@ else:
     else:
         # Progress bar
         total_questions = len(st.session_state.quiz_data)
-        current_q = min(st.session_state.current_q, total_questions - 1)  # Prevent index out of range
+        current_q = min(st.session_state.current_q, total_questions - 1)
         progress = (current_q / total_questions) * 100 if total_questions > 0 else 0
         st.markdown(f"""
         <div class="progress-bar" role="progressbar" aria-valuenow="{progress:.1f}" aria-valuemin="0" aria-valuemax="100">
@@ -319,8 +157,11 @@ else:
                 # Split question into text and code
                 if "```javascript" in q["question"]:
                     question_parts = q["question"].split("```javascript
-                    question_text = question_parts[0].strip()
-                    code_snippet = question_parts[1].split("```")[0].strip() if len(question_parts) > 1 else ""
+                    question_text = question_parts[0].strip() if question_parts else q["question"]
+                    code_snippet = ""
+                    if len(question_parts) > 1:
+                        code_parts = question_parts[1].split("```")
+                        code_snippet = code_parts[0].strip() if code_parts else ""
                     st.markdown(f"### Question {current_q + 1}")
                     st.markdown(f"**{question_text}**")
                     if code_snippet:
@@ -339,8 +180,7 @@ else:
                         option,
                         key=button_key,
                         disabled=st.session_state.selected_option is not None or st.session_state.paused,
-                        help=f"Select option {i + 1}",
-                        args=(button_class,)
+                        help=f"Select option {i + 1}"
                     ):
                         is_correct = option == q["labeled_answer"]
                         st.session_state.selected_option = option
@@ -365,7 +205,6 @@ else:
                                 st.session_state.score += 0.5
                         else:
                             st.session_state.streak = 0
-                        # Move to next question or show results
                         if current_q < total_questions - 1:
                             st.session_state.current_q += 1
                             st.session_state.selected_option = None
@@ -438,4 +277,3 @@ else:
             st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)
-
