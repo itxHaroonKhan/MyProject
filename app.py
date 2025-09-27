@@ -4,108 +4,447 @@ from datetime import datetime, timedelta
 import uuid
 
 # Quiz data - Enhanced with more questions
-quiz = [
+quiz =[
     {
-        "question": """What is the output of this code: ```javascript
-function example() { var x = 1; if (true) { var x = 2; } console.log(x); }
-example();
-```""",
+        "question": "What is the output of this code: ```javascript\nfunction example() { var x = 1; if (true) { var x = 2; } console.log(x); }\nexample();```",
         "options": ["1", "2", "undefined", "ReferenceError"],
         "answer": "2",
         "difficulty": "Medium",
         "explanation": "The 'var' keyword is function-scoped, so the inner 'var x = 2' reassigns the same variable, logging 2.",
-        "category": "Variables"
+        "category": "Variable Scoping"
     },
     {
-        "question": """What is the output of this code: ```javascript
-let x = 10; { let x = 20; } console.log(x);
-```""",
+        "question": "What is the output of this code: ```javascript\nlet x = 10; { let x = 20; } console.log(x);```",
         "options": ["10", "20", "undefined", "Error"],
         "answer": "10",
         "difficulty": "Medium",
         "explanation": "The 'let' keyword is block-scoped, so the inner 'let x = 20' creates a new variable, and the outer x remains 10.",
-        "category": "Variables"
+        "category": "Variable Scoping"
     },
     {
-        "question": """Which method validates an email input field in a form: ```javascript
-function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
-```""",
-        "options": ["true for 'user@domain.com'", "false for 'user@domain.com'", "true for 'user.domain.com'", "throws an error"],
-        "answer": "true for 'user@domain.com'",
+        "question": "What happens when you declare a variable with 'const' inside a block scope?",
+        "options": ["It’s accessible globally", "It’s accessible only within the block", "It’s hoisted to the function scope", "It causes a SyntaxError"],
+        "answer": "It’s accessible only within the block",
+        "difficulty": "Easy",
+        "explanation": "'const' is block-scoped, so the variable is only accessible within the block it’s declared in.",
+        "category": "Variable Scoping"
+    },
+    {
+        "question": "What is the output of: ```javascript\nfunction test() { console.log(x); var x = 5; }\ntest();```",
+        "options": ["5", "undefined", "ReferenceError", "null"],
+        "answer": "undefined",
+        "difficulty": "Medium",
+        "explanation": "Due to hoisting, 'var x' is declared but not initialized when console.log is called, so it outputs 'undefined'.",
+        "category": "Variable Scoping"
+    },
+    {
+        "question": "What is the scope of a variable declared without any keyword inside a function?",
+        "options": ["Block scope", "Function scope", "Global scope", "Module scope"],
+        "answer": "Global scope",
+        "difficulty": "Medium",
+        "explanation": "Without a keyword (var, let, const), a variable is implicitly declared in the global scope.",
+        "category": "Variable Scoping"
+    },
+    {
+        "question": "How do you validate that a drop-down menu (<select>) has a selected option?",
+        "options": ["Check if select.value is empty", "Check if select.selectedIndex is -1", "Check if select.options is null", "Check if select.text is undefined"],
+        "answer": "Check if select.selectedIndex is -1",
+        "difficulty": "Easy",
+        "explanation": "A drop-down’s selectedIndex is -1 when no option is selected, making it a reliable way to validate.",
+        "category": "Form validation: drop-downs"
+    },
+    {
+        "question": "What does select.options[select.selectedIndex].value return for a drop-down?",
+        "options": ["The text of the selected option", "The value of the selected option", "The index of the selected option", "The entire select element"],
+        "answer": "The value of the selected option",
+        "difficulty": "Medium",
+        "explanation": "select.options[select.selectedIndex].value retrieves the 'value' attribute of the currently selected option.",
+        "category": "Form validation: drop-downs"
+    },
+    {
+        "question": "How can you ensure at least one radio button in a group is selected?",
+        "options": ["Use input.checked for each radio", "Use radioGroup.value", "Use radioGroup.selected", "Use input.value"],
+        "answer": "Use input.checked for each radio",
+        "difficulty": "Easy",
+        "explanation": "Loop through radio buttons with the same 'name' attribute and check if any has 'input.checked' as true.",
+        "category": "Form validation: radio buttons"
+    },
+    {
+        "question": "What is the correct way to get the value of a selected radio button?",
+        "options": ["document.querySelector('input[type=radio]:checked').value", "document.getElementById('radio').value", "document.querySelector('input[type=radio]').value", "document.getElementsByName('radio').value"],
+        "answer": "document.querySelector('input[type=radio]:checked').value",
+        "difficulty": "Medium",
+        "explanation": "The ':checked' pseudo-class selects the radio button that is currently checked, and '.value' retrieves its value.",
+        "category": "Form validation: radio buttons"
+    },
+    {
+        "question": "Which regex pattern validates a US ZIP code (5 digits or 5+4)?",
+        "options": ["/^\\d{5}(-\\d{4})?$/", "/^\\d{5}$/", "/^\\d{5}-\\d{4}$/", "/^[0-9]{5,9}$/"],
+        "answer": "/^\\d{5}(-\\d{4})?$/",
+        "difficulty": "Medium",
+        "explanation": "The pattern allows 5 digits optionally followed by a hyphen and 4 digits, covering both ZIP formats.",
+        "category": "Form validation: ZIP codes"
+    },
+    {
+        "question": "What does the regex /^\\d{5}$/ validate for a ZIP code?",
+        "options": ["5-digit ZIP code", "5 or 9-digit ZIP code", "Any numeric string", "ZIP code with letters"],
+        "answer": "5-digit ZIP code",
+        "difficulty": "Easy",
+        "explanation": "The pattern /^\\d{5}$/ matches exactly 5 digits, suitable for basic US ZIP codes.",
+        "category": "Form validation: ZIP codes"
+    },
+    {
+        "question": "Which regex is best for validating an email address?",
+        "options": ["/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/", "/^\\w+@\\w+\\.\\w+$/", "/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2}$/", "/^.*@.*\\..*$/"],
+        "answer": "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/",
         "difficulty": "Hard",
-        "explanation": "The regex `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` checks for a valid email format, returning true for 'user@domain.com'.",
-        "category": "Regex"
+        "explanation": "This regex allows common email characters before and after the '@', a domain, and a TLD of 2+ characters.",
+        "category": "Form validation: email"
     },
     {
-        "question": """What does this code do: ```javascript
-try { throw new Error('Something went wrong'); } catch (e) { console.log(e.message); }
-```""",
-        "options": ["Logs 'Something went wrong'", "Throws an uncaught error", "Logs 'Error'", "Nothing"],
-        "answer": "Logs 'Something went wrong'",
+        "question": "What happens if an email input fails regex validation?",
+        "options": ["Form submission stops", "Browser shows a default error", "Nothing, unless handled in JS", "The input is cleared"],
+        "answer": "Nothing, unless handled in JS",
         "difficulty": "Medium",
-        "explanation": "The try block throws an Error, which is caught by the catch block, logging the error message 'Something went wrong'.",
-        "category": "Error Handling"
+        "explanation": "HTML5 email validation triggers browser errors, but custom regex validation in JS requires manual handling.",
+        "category": "Form validation: email"
     },
     {
-        "question": """How do you add an event listener to a button: ```javascript
-document.getElementById('myButton').addEventListener('click', function() { alert('Clicked!'); });
-```""",
-        "options": ["Alerts 'Clicked!' on click", "Throws an error", "Does nothing", "Logs 'Clicked!' to console"],
-        "answer": "Alerts 'Clicked!' on click",
+        "question": "What does a 'try...catch' block do in JavaScript?",
+        "options": ["Declares variables", "Handles errors", "Loops through arrays", "Defines functions"],
+        "answer": "Handles errors",
         "difficulty": "Easy",
-        "explanation": "The addEventListener method attaches a click event handler to the button, triggering an alert when clicked.",
-        "category": "DOM"
+        "explanation": "The 'try...catch' block catches exceptions thrown in the 'try' block and handles them in the 'catch' block.",
+        "category": "Exceptions: try and catch"
     },
     {
-        "question": """What is the nodeType of a text node in the DOM? ```javascript
-let textNode = document.createTextNode('Hello'); console.log(textNode.nodeType);
-```""",
+        "question": "What is logged in: ```javascript\ntry { throw new Error('Oops'); } catch (e) { console.log(e.message); }```",
+        "options": ["Oops", "Error", "undefined", "null"],
+        "answer": "Oops",
+        "difficulty": "Medium",
+        "explanation": "The 'throw new Error('Oops')' creates an error with the message 'Oops', which is caught and logged.",
+        "category": "Exceptions: try and catch"
+    },
+    {
+        "question": "What does the 'throw' statement do?",
+        "options": ["Exits a function", "Throws an exception", "Logs a message", "Declares a variable"],
+        "answer": "Throws an exception",
+        "difficulty": "Easy",
+        "explanation": "The 'throw' statement creates and throws a custom exception, often used with 'try...catch'.",
+        "category": "Exceptions: throw"
+    },
+    {
+        "question": "What happens in: ```javascript\nthrow 'CustomError';```?",
+        "options": ["Logs 'CustomError'", "Throws a string as an exception", "Creates a variable", "Causes a SyntaxError"],
+        "answer": "Throws a string as an exception",
+        "difficulty": "Medium",
+        "explanation": "The 'throw' statement can throw any value, like a string, which can be caught in a 'catch' block.",
+        "category": "Exceptions: throw"
+    },
+    {
+        "question": "How do you add an event listener to a button in JavaScript?",
+        "options": ["button.addEventListener('click', handler)", "button.onClick(handler)", "button.attachEvent('click', handler)", "button.event('click', handler)"],
+        "answer": "button.addEventListener('click', handler)",
+        "difficulty": "Easy",
+        "explanation": "'addEventListener' is the standard way to attach an event handler to an element for events like 'click'.",
+        "category": "Handling events within JavaScript"
+    },
+    {
+        "question": "What does 'event.preventDefault()' do in an event handler?",
+        "options": ["Stops event propagation", "Prevents the default action", "Removes the event listener", "Logs the event"],
+        "answer": "Prevents the default action",
+        "difficulty": "Medium",
+        "explanation": "'preventDefault()' stops the browser’s default action, like form submission or link navigation.",
+        "category": "Handling events within JavaScript"
+    },
+    {
+        "question": "What is a 'junk artifact' in the DOM?",
+        "options": ["A text node", "A comment node", "An element node", "A script node"],
+        "answer": "A comment node",
+        "difficulty": "Medium",
+        "explanation": "Junk artifacts, like comment nodes, are non-element nodes (nodeType 8) that don’t affect rendering.",
+        "category": "The DOM: Junk artifacts and nodeType"
+    },
+    {
+        "question": "What is the nodeType of an HTML element?",
         "options": ["1", "3", "8", "9"],
-        "answer": "3",
-        "difficulty": "Medium",
-        "explanation": "In the DOM, a text node's nodeType is 3, as defined by the DOM specification.",
-        "category": "DOM"
-    },
-    {
-        "question": """How do you get an element by its class name: ```javascript
-document.getElementsByClassName('myClass');
-```""",
-        "options": ["Returns an HTMLCollection", "Returns a single element", "Throws an error", "Returns null"],
-        "answer": "Returns an HTMLCollection",
+        "answer": "1",
         "difficulty": "Easy",
-        "explanation": "getElementsByClassName returns an HTMLCollection of elements with the specified class name.",
-        "category": "DOM"
+        "explanation": "The nodeType of an HTML element is 1, while text nodes are 3, and comment nodes are 8.",
+        "category": "The DOM: Junk artifacts and nodeType"
     },
     {
-        "question": """What does this code do: ```javascript
-let obj = { name: 'Test', greet: function() { return 'Hello ' + this.name; } }; console.log(obj.greet());
-```""",
-        "options": ["Logs 'Hello Test'", "Logs 'Hello undefined'", "Throws an error", "Logs 'Test'"],
-        "answer": "Logs 'Hello Test'",
+        "question": "Which method targets an element by its ID?",
+        "options": ["document.querySelector()", "document.getElementById()", "document.getElementsByClassName()", "document.getElementsByTagName()"],
+        "answer": "document.getElementById()",
+        "difficulty": "Easy",
+        "explanation": "'getElementById()' is the most direct way to target an element by its unique ID.",
+        "category": "The DOM: More ways to target elements"
+    },
+    {
+        "question": "How do you select all elements with a specific class?",
+        "options": ["document.querySelectorAll('.class')", "document.getElementByClass('.class')", "document.getElementsByClassName('class')", "Both A and C"],
+        "answer": "Both A and C",
         "difficulty": "Medium",
-        "explanation": "The greet method uses 'this' to access the object's name property, returning 'Hello Test'.",
+        "explanation": "Both 'querySelectorAll' and 'getElementsByClassName' can select elements by class, returning a NodeList or HTMLCollection.",
+        "category": "The DOM: More ways to target elements"
+    },
+    {
+        "question": "How do you get the tag name of a DOM element?",
+        "options": ["element.tagName", "element.nodeName", "element.name", "Both A and B"],
+        "answer": "Both A and B",
+        "difficulty": "Medium",
+        "explanation": "Both 'tagName' and 'nodeName' return the tag name of an element, like 'DIV' or 'P'.",
+        "category": "The DOM: Getting a target's name"
+    },
+    {
+        "question": "What does element.tagName return for a <div> element?",
+        "options": ["div", "DIV", "<div>", "null"],
+        "answer": "DIV",
+        "difficulty": "Easy",
+        "explanation": "'tagName' returns the tag name in uppercase, so a <div> element returns 'DIV'.",
+        "category": "The DOM: Getting a target's name"
+    },
+    {
+        "question": "How do you count the number of <p> elements in a document?",
+        "options": ["document.getElementsByTagName('p').length", "document.querySelector('p').count", "document.getElementsByClassName('p').length", "document.querySelectorAll('p').count"],
+        "answer": "document.getElementsByTagName('p').length",
+        "difficulty": "Easy",
+        "explanation": "'getElementsByTagName' returns an HTMLCollection, and '.length' gives the count of matching elements.",
+        "category": "The DOM: Counting elements"
+    },
+    {
+        "question": "What does document.querySelectorAll('div').length return?",
+        "options": ["Number of divs", "Number of all elements", "Number of classes", "Number of attributes"],
+        "answer": "Number of divs",
+        "difficulty": "Easy",
+        "explanation": "'querySelectorAll('div')' returns a NodeList of all <div> elements, and '.length' counts them.",
+        "category": "The DOM: Counting elements"
+    },
+    {
+        "question": "How do you check if an element has a specific attribute?",
+        "options": ["element.hasAttribute('name')", "element.getAttribute('name')", "element.attribute('name')", "element.checkAttribute('name')"],
+        "answer": "element.hasAttribute('name')",
+        "difficulty": "Easy",
+        "explanation": "'hasAttribute' checks if an element has a specified attribute, returning true or false.",
+        "category": "The DOM: Attributes"
+    },
+    {
+        "question": "How do you set an attribute on a DOM element?",
+        "options": ["element.setAttribute('name', 'value')", "element.attribute('name', 'value')", "element.name = 'value'", "element.addAttribute('name', 'value')"],
+        "answer": "element.setAttribute('name', 'value')",
+        "difficulty": "Easy",
+        "explanation": "'setAttribute' sets or updates an attribute’s value on a DOM element.",
+        "category": "The DOM: Attributes"
+    },
+    {
+        "question": "How do you get all attribute names of an element?",
+        "options": ["Array.from(element.attributes).map(attr => attr.name)", "element.getAttributeNames()", "element.attributes.map(attr => attr.name)", "Both A and B"],
+        "answer": "Both A and B",
+        "difficulty": "Medium",
+        "explanation": "'getAttributeNames()' directly returns an array of attribute names, or you can map 'element.attributes'.",
+        "category": "The DOM: Attribute names and values"
+    },
+    {
+        "question": "What does element.getAttribute('id') return?",
+        "options": ["The element’s ID", "The element’s class", "The element’s tag", "null if no ID"],
+        "answer": "null if no ID",
+        "difficulty": "Medium",
+        "explanation": "'getAttribute('id')' returns the ID’s value or null if the attribute doesn’t exist.",
+        "category": "The DOM: Attribute names and values"
+    },
+    {
+        "question": "How do you create a new DOM element?",
+        "options": ["document.createElement('tag')", "document.newElement('tag')", "document.createNode('tag')", "document.addElement('tag')"],
+        "answer": "document.createElement('tag')",
+        "difficulty": "Easy",
+        "explanation": "'createElement' creates a new DOM element with the specified tag name.",
+        "category": "The DOM: Adding nodes"
+    },
+    {
+        "question": "What does document.createElement('div') return?",
+        "options": ["A new div element", "A text node", "A comment node", "An attribute"],
+        "answer": "A new div element",
+        "difficulty": "Easy",
+        "explanation": "'createElement('div')' returns a new <div> element, not yet added to the DOM.",
+        "category": "The DOM: Adding nodes"
+    },
+    {
+        "question": "How do you append a node to an element’s children?",
+        "options": ["element.appendChild(node)", "element.addChild(node)", "element.insertChild(node)", "element.append(node)"],
+        "answer": "element.appendChild(node)",
+        "difficulty": "Easy",
+        "explanation": "'appendChild' adds a node as the last child of the specified element.",
+        "category": "The DOM: Inserting nodes"
+    },
+    {
+        "question": "How do you insert a node before an existing child?",
+        "options": ["parent.insertBefore(newNode, existingNode)", "parent.insertChild(newNode, existingNode)", "parent.addBefore(newNode, existingNode)", "parent.prepend(newNode)"],
+        "answer": "parent.insertBefore(newNode, existingNode)",
+        "difficulty": "Medium",
+        "explanation": "'insertBefore' inserts a new node before the specified existing child in the parent.",
+        "category": "The DOM: Inserting nodes"
+    },
+    {
+        "question": "What is a JavaScript object?",
+        "options": ["A collection of properties", "A function", "A variable", "A DOM element"],
+        "answer": "A collection of properties",
+        "difficulty": "Easy",
+        "explanation": "A JavaScript object is a collection of key-value pairs, where values can be data or functions.",
         "category": "Objects"
     },
     {
-        "question": """How do you set the URL of the current page: ```javascript
-window.location.href = 'https://example.com';
-```""",
-        "options": ["Navigates to 'https://example.com'", "Opens a new tab", "Logs the URL", "Throws an error"],
-        "answer": "Navigates to 'https://example.com'",
+        "question": "How do you access a property of an object?",
+        "options": ["object.property or object['property']", "object.getProperty()", "object(property)", "object->property"],
+        "answer": "object.property or object['property']",
         "difficulty": "Easy",
-        "explanation": "Setting window.location.href navigates the current page to the specified URL.",
-        "category": "Browser API"
+        "explanation": "Properties can be accessed using dot notation or bracket notation.",
+        "category": "Objects: Properties"
     },
     {
-        "question": """What does this code do: ```javascript
-window.resizeTo(800, 600);
-```""",
-        "options": ["Resizes the window to 800x600 pixels", "Moves the window", "Closes the window", "Throws an error"],
-        "answer": "Resizes the window to 800x600 pixels",
-        "difficulty": "Medium",
-        "explanation": "The window.resizeTo method resizes the browser window to the specified width and height.",
-        "category": "Browser API"
+        "question": "How do you add a method to an object?",
+        "options": ["object.method = function() {}", "object.addMethod(function)", "object.method(function)", "object.setMethod()"],
+        "answer": "object.method = function() {}",
+        "difficulty": "Easy",
+        "explanation": "A method is added by assigning a function to a property of the object.",
+        "category": "Objects: Methods"
     },
+    {
+        "question": "What is a constructor in JavaScript?",
+        "options": ["A function to create objects", "A loop", "An event handler", "A variable"],
+        "answer": "A function to create objects",
+        "difficulty": "Medium",
+        "explanation": "A constructor is a function used with 'new' to create and initialize objects.",
+        "category": "Objects: Constructors"
+    },
+    {
+        "question": "What is the output of: ```javascript\nfunction Person(name) { this.name = name; }\nlet p = new Person('Alice');\nconsole.log(p.name);```",
+        "options": ["Alice", "Person", "undefined", "null"],
+        "answer": "Alice",
+        "difficulty": "Medium",
+        "explanation": "The constructor 'Person' sets the 'name' property, and 'new' creates an object with that property.",
+        "category": "Objects: Constructors"
+    },
+    {
+        "question": "How do you add a method to a constructor’s prototype?",
+        "options": ["Constructor.prototype.method = function() {}", "Constructor.method = function() {}", "Constructor.addMethod()", "Constructor.setMethod()"],
+        "answer": "Constructor.prototype.method = function() {}",
+        "difficulty": "Medium",
+        "explanation": "Methods added to the prototype are shared by all instances of the constructor.",
+        "category": "Objects: Constructors for methods"
+    },
+    {
+        "question": "What is a prototype in JavaScript?",
+        "options": ["An object for inheritance", "A function", "A variable", "A DOM node"],
+        "answer": "An object for inheritance",
+        "difficulty": "Medium",
+        "explanation": "Prototypes are objects from which other objects inherit properties and methods.",
+        "category": "Objects: Prototypes"
+    },
+    {
+        "question": "How do you check if an object has a property?",
+        "options": ["'property' in object", "object.hasProperty('property')", "object.propertyExists('property')", "object.getProperty('property')"],
+        "answer": "'property' in object",
+        "difficulty": "Medium",
+        "explanation": "The 'in' operator checks if a property exists in an object or its prototype chain.",
+        "category": "Objects: Checking for properties and methods"
+    },
+    {
+        "question": "How do you check if a property is directly on an object (not inherited)?",
+        "options": ["object.hasOwnProperty('property')", "object.owns('property')", "object.property('property')", "'property' in object"],
+        "answer": "object.hasOwnProperty('property')",
+        "difficulty": "Medium",
+        "explanation": "'hasOwnProperty' checks if a property exists directly on the object, not its prototype.",
+        "category": "Objects: Checking for properties and methods"
+    },
+    {
+        "question": "How do you get the current URL of a page?",
+        "options": ["window.location.href", "document.url", "window.url", "document.location"],
+        "answer": "window.location.href",
+        "difficulty": "Easy",
+        "explanation": "'window.location.href' returns the full URL of the current page.",
+        "category": "Browser control: Getting and setting the URL"
+    },
+    {
+        "question": "How do you set a new URL for the page?",
+        "options": ["window.location.href = 'new-url'", "window.url = 'new-url'", "document.location('new-url')", "window.setUrl('new-url')"],
+        "answer": "window.location.href = 'new-url'",
+        "difficulty": "Easy",
+        "explanation": "Assigning a new value to 'window.location.href' navigates to the new URL.",
+        "category": "Browser control: Getting and setting the URL"
+    },
+    {
+        "question": "What does window.location.assign('new-url') do?",
+        "options": ["Navigates to a new URL", "Reloads the page", "Clears the URL", "Opens a popup"],
+        "answer": "Navigates to a new URL",
+        "difficulty": "Medium",
+        "explanation": "'window.location.assign' navigates to a new URL, similar to setting 'window.location.href'.",
+        "category": "Browser control: Getting and setting the URL another way"
+    },
+    {
+        "question": "How do you go back to the previous page?",
+        "options": ["window.history.back()", "window.back()", "window.history.prev()", "window.location.back()"],
+        "answer": "window.history.back()",
+        "difficulty": "Easy",
+        "explanation": "'window.history.back()' navigates to the previous page in the browser’s history.",
+        "category": "Browser control: Forward and reverse"
+    },
+    {
+        "question": "How do you go forward in browser history?",
+        "options": ["window.history.forward()", "window.forward()", "window.history.next()", "window.location.forward()"],
+        "answer": "window.history.forward()",
+        "difficulty": "Easy",
+        "explanation": "'window.history.forward()' navigates to the next page in the browser’s history.",
+        "category": "Browser control: Forward and reverse"
+    },
+    {
+        "question": "How do you set the content of the entire page?",
+        "options": ["document.body.innerHTML = 'content'", "window.content = 'content'", "document.write('content')", "Both A and C"],
+        "answer": "Both A and C",
+        "difficulty": "Medium",
+        "explanation": "'document.body.innerHTML' and 'document.write' can both set the page’s content, though 'write' is less common.",
+        "category": "Browser control: Filling the window with content"
+    },
+    {
+        "question": "How do you resize a browser window?",
+        "options": ["window.resizeTo(width, height)", "window.setSize(width, height)", "window.size(width, height)", "document.resize(width, height)"],
+        "answer": "window.resizeTo(width, height)",
+        "difficulty": "Medium",
+        "explanation": "'window.resizeTo' resizes the browser window to the specified dimensions.",
+        "category": "Browser control: Controlling the window's size and location"
+    },
+    {
+        "question": "How do you move a window to a specific position?",
+        "options": ["window.moveTo(x, y)", "window.setPosition(x, y)", "window.location(x, y)", "window.move(x, y)"],
+        "answer": "window.moveTo(x, y)",
+        "difficulty": "Medium",
+        "explanation": "'window.moveTo' moves the browser window to the specified coordinates.",
+        "category": "Browser control: Controlling the window's size and location"
+    },
+    {
+        "question": "How can you detect if popups are blocked?",
+        "options": ["Check if window.open() returns null", "Check window.popupBlocked", "Check document.popup", "Check window.isBlocked"],
+        "answer": "Check if window.open() returns null",
+        "difficulty": "Medium",
+        "explanation": "If 'window.open()' returns null, it indicates the popup was blocked by the browser.",
+        "category": "Browser control: Testing for popup blockers"
+    },
+    {
+        "question": "How do you validate a text field is not empty?",
+        "options": ["input.value.trim() !== ''", "input.text !== ''", "input.value.length > 0", "Both A and C"],
+        "answer": "Both A and C",
+        "difficulty": "Easy",
+        "explanation": "Both checking 'value.length > 0' and 'value.trim() !== ''' validate a non-empty text field, with 'trim()' handling whitespace.",
+        "category": "Form validation: text fields"
+    },
+    {
+        "question": "What does input.value.trim() do in form validation?",
+        "options": ["Removes whitespace from both ends", "Converts to lowercase", "Removes special characters", "Checks for numbers"],
+        "answer": "Removes whitespace from both ends",
+        "difficulty": "Easy",
+        "explanation": "'trim()' removes leading and trailing whitespace from a string, useful for validating text fields.",
+        "category": "Form validation: text fields"
+    }
 ]
 
 # Enhanced CSS with better styling
