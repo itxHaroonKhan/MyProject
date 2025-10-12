@@ -6,444 +6,524 @@ import uuid
 # Quiz data - Enhanced with more questions
 quiz =[
     {
-        "question": "What is the output of this code: ```javascript\nfunction example() { var x = 1; if (true) { var x = 2; } console.log(x); }\nexample();```",
-        "options": ["1", "2", "undefined", "ReferenceError"],
+        "question": "What is the output of: ```typescript\nlet x: number = 10; console.log(x * 2);```",
+        "options": ["20", "10", "Error", "undefined"],
+        "answer": "20",
+        "difficulty": "Easy",
+        "explanation": "The variable 'x' is typed as a number, so 'x * 2' computes 20.",
+        "category": "TypeScript"
+    },
+    {
+        "question": "What does TypeScript provide over JavaScript?",
+        "options": ["Static typing", "Runtime execution", "Module bundling", "Code minification"],
+        "answer": "Static typing",
+        "difficulty": "Easy",
+        "explanation": "TypeScript adds static typing to JavaScript, enabling type checking at compile time.",
+        "category": "TypeScript"
+    },
+    {
+        "question": "What is the output of: ```typescript\nconst x: string = 'hello'; console.log(x.toUpperCase());```",
+        "options": ["HELLO", "hello", "Error", "undefined"],
+        "answer": "HELLO",
+        "difficulty": "Easy",
+        "explanation": "The 'string' type allows string methods like 'toUpperCase', which returns 'HELLO'.",
+        "category": "TypeScript"
+    },
+    {
+        "question": "What happens if you assign: ```typescript\nlet x: boolean = 'true';```",
+        "options": ["Type error", "Converts to boolean", "No error", "undefined"],
+        "answer": "Type error",
+        "difficulty": "Easy",
+        "explanation": "Assigning a string to a boolean-typed variable causes a type error in TypeScript.",
+        "category": "TypeScript"
+    },
+    {
+        "question": "What is the purpose of the 'tsc' command?",
+        "options": ["Compiles TypeScript to JavaScript", "Runs TypeScript code", "Formats code", "Bundles modules"],
+        "answer": "Compiles TypeScript to JavaScript",
+        "difficulty": "Easy",
+        "explanation": "'tsc' transpiles TypeScript files into JavaScript based on tsconfig.json.",
+        "category": "TS Compiler"
+    },
+    {
+        "question": "What does 'outDir' specify in tsconfig.json?",
+        "options": ["Output directory for compiled files", "Input file directory", "Module type", "Target JavaScript version"],
+        "answer": "Output directory for compiled files",
+        "difficulty": "Easy",
+        "explanation": "'outDir' defines where compiled JavaScript files are saved.",
+        "category": "TS Compiler"
+    },
+    {
+        "question": "What happens with: ```typescript\ntsc app.ts --target ES5```?",
+        "options": ["Compiles to ES5 JavaScript", "Compiles to ES6", "Causes an error", "Runs the code"],
+        "answer": "Compiles to ES5 JavaScript",
+        "difficulty": "Medium",
+        "explanation": "The '--target ES5' flag compiles TypeScript to ES5-compatible JavaScript.",
+        "category": "TS Compiler"
+    },
+    {
+        "question": "What is the effect of 'strictNullChecks' in tsconfig.json?",
+        "options": ["Enforces null/undefined checks", "Disables type checking", "Allows any type", "Minifies output"],
+        "answer": "Enforces null/undefined checks",
+        "difficulty": "Medium",
+        "explanation": "'strictNullChecks: true' ensures null and undefined are not assignable to other types.",
+        "category": "TS Compiler"
+    },
+    {
+        "question": "What does 'tsc --watch' do?",
+        "options": ["Recompiles on file changes", "Runs the code", "Formats the code", "Generates type definitions"],
+        "answer": "Recompiles on file changes",
+        "difficulty": "Medium",
+        "explanation": "'--watch' mode recompiles TypeScript files automatically when they change.",
+        "category": "TS Compiler"
+    },
+    {
+        "question": "What is wrong with: ```typescript\ntsc file.js```?",
+        "options": ["Cannot compile .js files", "No error", "Missing tsconfig.json", "Invalid flag"],
+        "answer": "Cannot compile .js files",
+        "difficulty": "Easy",
+        "explanation": "'tsc' is designed to compile .ts files, not .js files.",
+        "category": "TS Compiler"
+    },
+    {
+        "question": "What is the correct type annotation for an array of strings?",
+        "options": ["let arr: string[]", "let arr: Array<string>", "let arr: [string]", "Both A and B"],
+        "answer": "Both A and B",
+        "difficulty": "Easy",
+        "explanation": "TypeScript supports 'string[]' and 'Array<string>' for string arrays.",
+        "category": "Type Annotations"
+    },
+    {
+        "question": "What is the output of: ```typescript\nlet x: number | string = 5; x = 'test'; console.log(x);```",
+        "options": ["test", "5", "Error", "undefined"],
+        "answer": "test",
+        "difficulty": "Medium",
+        "explanation": "The union type allows 'x' to be reassigned to a string, logging 'test'.",
+        "category": "Type Annotations"
+    },
+    {
+        "question": "How do you annotate a function returning a number?",
+        "options": ["function fn(): number", "function fn: number", "function fn() => number", "function fn() = number"],
+        "answer": "function fn(): number",
+        "difficulty": "Easy",
+        "explanation": "The ': number' after the parameter list specifies the return type.",
+        "category": "Type Annotations"
+    },
+    {
+        "question": "What is wrong with: ```typescript\nlet x: number = true;```",
+        "options": ["Type mismatch", "Syntax error", "No error", "Missing declaration"],
+        "answer": "Type mismatch",
+        "difficulty": "Easy",
+        "explanation": "Assigning a boolean to a number-typed variable causes a type error.",
+        "category": "Type Annotations"
+    },
+    {
+        "question": "What is the type of 'x' in: ```typescript\nfunction fn(x: { id: number }): void {}```",
+        "options": ["Object with id: number", "any", "number", "void"],
+        "answer": "Object with id: number",
+        "difficulty": "Medium",
+        "explanation": "The parameter 'x' is typed as an object with an 'id' property of type number.",
+        "category": "Type Annotations"
+    },
+    {
+        "question": "What does this interface define: ```typescript\ninterface User { name: string; age?: number; }```",
+        "options": ["Object with name and optional age", "Object with name only", "Object with age only", "Class with name and age"],
+        "answer": "Object with name and optional age",
+        "difficulty": "Easy",
+        "explanation": "The interface defines an object with a required 'name' and optional 'age'.",
+        "category": "Interfaces"
+    },
+    {
+        "question": "What is the output of: ```typescript\ninterface Point { x: number; } let p: Point = { x: 10 }; console.log(p.x);```",
+        "options": ["10", "undefined", "Error", "null"],
+        "answer": "10",
+        "difficulty": "Easy",
+        "explanation": "The interface ensures 'p' has an 'x' property, logging 10.",
+        "category": "Interfaces"
+    },
+    {
+        "question": "What is wrong with: ```typescript\ninterface A { x: number; } let a: A = { x: 1, y: 'test' };```",
+        "options": ["Extra property 'y'", "Missing 'x'", "Type mismatch", "No error"],
+        "answer": "Extra property 'y'",
+        "difficulty": "Medium",
+        "explanation": "TypeScript flags extra properties not in the interface as errors in strict mode.",
+        "category": "Interfaces"
+    },
+    {
+        "question": "How do you extend an interface?",
+        "options": ["interface B extends A {}", "interface B : A {}", "interface B implements A {}", "interface B = A {}"],
+        "answer": "interface B extends A {}",
+        "difficulty": "Medium",
+        "explanation": "'extends' allows an interface to inherit properties from another interface.",
+        "category": "Interfaces"
+    },
+    {
+        "question": "What does this log: ```typescript\ninterface A { x: number; } interface B extends A { y: string; } let b: B = { x: 1, y: 'test' }; console.log(b.y);```",
+        "options": ["test", "1", "Error", "undefined"],
+        "answer": "test",
+        "difficulty": "Medium",
+        "explanation": "'B' extends 'A', so 'b' has both 'x' and 'y', logging 'test'.",
+        "category": "Interfaces"
+    },
+    {
+        "question": "What is the output of: ```typescript\nclass Car { model: string = 'Sedan'; } let car = new Car(); console.log(car.model);```",
+        "options": ["Sedan", "undefined", "Error", "null"],
+        "answer": "Sedan",
+        "difficulty": "Easy",
+        "explanation": "The class initializes 'model' to 'Sedan', which is logged.",
+        "category": "Classes"
+    },
+    {
+        "question": "How do you define a protected property in a class?",
+        "options": ["protected x: number", "private x: number", "#x: number", "public x: number"],
+        "answer": "protected x: number",
+        "difficulty": "Medium",
+        "explanation": "'protected' properties are accessible in the class and its subclasses.",
+        "category": "Classes"
+    },
+    {
+        "question": "What does this log: ```typescript\nclass A { x = 1; } class B extends A { x = 2; } let b = new B(); console.log(b.x);```",
+        "options": ["2", "1", "Error", "undefined"],
         "answer": "2",
         "difficulty": "Medium",
-        "explanation": "The 'var' keyword is function-scoped, so the inner 'var x = 2' reassigns the same variable, logging 2.",
-        "category": "Variable Scoping"
+        "explanation": "The subclass 'B' overrides 'x', so 'b.x' logs 2.",
+        "category": "Classes"
     },
     {
-        "question": "What is the output of this code: ```javascript\nlet x = 10; { let x = 20; } console.log(x);```",
-        "options": ["10", "20", "undefined", "Error"],
+        "question": "What is wrong with: ```typescript\nclass A { private x = 1; } class B extends A { x = 2; }```",
+        "options": ["Cannot override private property", "No error", "Syntax error", "Missing constructor"],
+        "answer": "Cannot override private property",
+        "difficulty": "Medium",
+        "explanation": "'private' properties are not accessible in subclasses, causing a type error.",
+        "category": "Classes"
+    },
+    {
+        "question": "What does 'implements' ensure in a class?",
+        "options": ["Adheres to an interface", "Inherits a class", "Declares a method", "Creates an instance"],
+        "answer": "Adheres to an interface",
+        "difficulty": "Medium",
+        "explanation": "'implements' ensures a class follows the structure of an interface.",
+        "category": "Classes"
+    },
+    {
+        "question": "What does this log: ```typescript\nfunction identity<T>(value: T): T { return value; } console.log(identity<string>('hello'));```",
+        "options": ["hello", "undefined", "Error", "null"],
+        "answer": "hello",
+        "difficulty": "Medium",
+        "explanation": "The generic function returns the input value, typed as 'string', logging 'hello'.",
+        "category": "Generics"
+    },
+    {
+        "question": "How do you constrain a generic type to have a specific property?",
+        "options": ["T extends { prop: type }", "T : { prop: type }", "T implements { prop: type }", "T = { prop: type }"],
+        "answer": "T extends { prop: type }",
+        "difficulty": "Medium",
+        "explanation": "'extends' constrains the generic type to objects with the specified property.",
+        "category": "Generics"
+    },
+    {
+        "question": "What is wrong with: ```typescript\nfunction fn<T>(x: T): number { return x; }```",
+        "options": ["Return type mismatch", "No error", "Syntax error", "Missing generic constraint"],
+        "answer": "Return type mismatch",
+        "difficulty": "Hard",
+        "explanation": "'x' of type 'T' cannot be guaranteed to be a number, causing a type error.",
+        "category": "Generics"
+    },
+    {
+        "question": "What does this log: ```typescript\nfunction merge<T, U>(a: T, b: U) { return { ...a, ...b }; } console.log(merge({ x: 1 }, { y: 2 }).y);```",
+        "options": ["2", "1", "Error", "undefined"],
+        "answer": "2",
+        "difficulty": "Medium",
+        "explanation": "The generic function merges objects, and the result has property 'y' with value 2.",
+        "category": "Generics"
+    },
+    {
+        "question": "What is the output of: ```typescript\nfunction wrap<T>(x: T[]): T[] { return x; } console.log(wrap<number>([1, 2])[0]);```",
+        "options": ["1", "undefined", "Error", "null"],
+        "answer": "1",
+        "difficulty": "Medium",
+        "explanation": "The generic function returns the input array, and the first element is 1.",
+        "category": "Generics"
+    },
+    {
+        "question": "What is the output of: ```typescript\nenum Direction { Up, Down } console.log(Direction.Up);```",
+        "options": ["0", "Up", "Error", "undefined"],
+        "answer": "0",
+        "difficulty": "Medium",
+        "explanation": "Numeric enums assign values starting at 0, so 'Up' is 0.",
+        "category": "Enums"
+    },
+    {
+        "question": "How do you define a string enum?",
+        "options": ["enum E { A = 'a' }", "enum E { A: 'a' }", "enum E { A = string }", "enum E = 'a'"],
+        "answer": "enum E { A = 'a' }",
+        "difficulty": "Medium",
+        "explanation": "String enums assign string values to members, e.g., 'A = 'a''. ",
+        "category": "Enums"
+    },
+    {
+        "question": "What does this log: ```typescript\nenum Color { Red = 2, Blue } console.log(Color.Blue);```",
+        "options": ["3", "2", "Blue", "Error"],
+        "answer": "3",
+        "difficulty": "Medium",
+        "explanation": "Enums increment numeric values, so 'Blue' is 3 after 'Red = 2'.",
+        "category": "Enums"
+    },
+    {
+        "question": "How do you get an enum’s name by value?",
+        "options": ["Enum[value]", "Enum.getName(value)", "Enum.valueOf(value)", "Enum.name(value)"],
+        "answer": "Enum[value]",
+        "difficulty": "Medium",
+        "explanation": "Enums are objects at runtime, so 'Enum[value]' retrieves the name for a value.",
+        "category": "Enums"
+    },
+    {
+        "question": "What does this log: ```typescript\nenum E { A = 'x' } console.log(E['x']);```",
+        "options": ["A", "x", "Error", "undefined"],
+        "answer": "A",
+        "difficulty": "Medium",
+        "explanation": "String enums allow reverse lookup, so 'E['x']' returns the name 'A'.",
+        "category": "Enums"
+    },
+    {
+        "question": "What type is inferred for: ```typescript\nlet x = true;```",
+        "options": ["boolean", "any", "true", "undefined"],
+        "answer": "boolean",
+        "difficulty": "Easy",
+        "explanation": "TypeScript infers 'boolean' based on the value 'true'.",
+        "category": "Type Inference"
+    },
+    {
+        "question": "What is inferred for: ```typescript\nconst arr = [1, 'test'];```",
+        "options": ["(number | string)[]", "any[]", "Array<number>", "string[]"],
+        "answer": "(number | string)[]",
+        "difficulty": "Medium",
+        "explanation": "TypeScript infers a union type array based on the mixed elements.",
+        "category": "Type Inference"
+    },
+    {
+        "question": "What happens if you assign: ```typescript\nlet x = 10; x = false;```",
+        "options": ["Type error", "No error", "Converts to boolean", "undefined"],
+        "answer": "Type error",
+        "difficulty": "Medium",
+        "explanation": "TypeScript infers 'x' as 'number', so assigning a boolean causes a type error.",
+        "category": "Type Inference"
+    },
+    {
+        "question": "What is inferred for: ```typescript\nfunction fn(x) { return x.length; }```",
+        "options": ["any", "number", "string", "void"],
+        "answer": "any",
+        "difficulty": "Medium",
+        "explanation": "Without type annotations, TypeScript infers 'any' for the parameter and return type.",
+        "category": "Type Inference"
+    },
+    {
+        "question": "What is inferred for: ```typescript\nconst x = { id: 1 };```",
+        "options": ["{ id: number }", "any", "object", "number"],
+        "answer": "{ id: number }",
+        "difficulty": "Medium",
+        "explanation": "TypeScript infers an object type with an 'id' property of type 'number'.",
+        "category": "Type Inference"
+    },
+    {
+        "question": "What does this log: ```typescript\nlet x: number | string = 5; if (typeof x === 'string') { console.log(x.length); } else { console.log(x); }```",
+        "options": ["5", "undefined", "Error", "null"],
+        "answer": "5",
+        "difficulty": "Medium",
+        "explanation": "The 'typeof' check ensures 'x' is treated as a number in the 'else' block, logging 5.",
+        "category": "Union and Intersection Types"
+    },
+    {
+        "question": "What is an intersection type?",
+        "options": ["Combines multiple types", "Selects one type", "Excludes types", "Creates a union"],
+        "answer": "Combines multiple types",
+        "difficulty": "Medium",
+        "explanation": "Intersection types, e.g., 'A & B', require all properties from both types.",
+        "category": "Union and Intersection Types"
+    },
+    {
+        "question": "What is wrong with: ```typescript\ntype A = { x: number }; type B = { y: string }; let obj: A & B = { x: 1 };```",
+        "options": ["Missing 'y' property", "No error", "Type mismatch", "Invalid syntax"],
+        "answer": "Missing 'y' property",
+        "difficulty": "Medium",
+        "explanation": "An intersection type requires all properties from both 'A' and 'B'.",
+        "category": "Union and Intersection Types"
+    },
+    {
+        "question": "What does this log: ```typescript\ntype A = { x: number }; type B = { y: string }; let obj: A | B = { y: 'test' }; console.log('y' in obj ? obj.y : 'no');```",
+        "options": ["test", "no", "Error", "undefined"],
+        "answer": "test",
+        "difficulty": "Medium",
+        "explanation": "The 'in' operator checks for 'y', and since 'obj' has 'y', it logs 'test'.",
+        "category": "Union and Intersection Types"
+    },
+    {
+        "question": "What is the output of: ```typescript\ntype A = { x: number }; let obj: A | null = { x: 1 }; console.log(obj?.x);```",
+        "options": ["1", "null", "Error", "undefined"],
+        "answer": "1",
+        "difficulty": "Medium",
+        "explanation": "The optional chaining '?.' safely accesses 'x', logging 1 since 'obj' is not null.",
+        "category": "Union and Intersection Types"
+    },
+    {
+        "question": "What does this log: ```typescript\nfunction fn(x: string | number) { if (typeof x === 'number') { console.log(x * 2); } } fn(10);```",
+        "options": ["20", "undefined", "Error", "null"],
+        "answer": "20",
+        "difficulty": "Medium",
+        "explanation": "The 'typeof' type guard narrows 'x' to 'number', so 'x * 2' logs 20.",
+        "category": "Type Guards"
+    },
+    {
+        "question": "What is a type guard using 'instanceof'?",
+        "options": ["Checks if an object is an instance of a class", "Checks for a property", "Declares a type", "Casts a type"],
+        "answer": "Checks if an object is an instance of a class",
+        "difficulty": "Easy",
+        "explanation": "'instanceof' narrows a type by checking if an object is an instance of a class.",
+        "category": "Type Guards"
+    },
+    {
+        "question": "What does this log: ```typescript\nclass A { x = 1; } function fn(obj: any) { if (obj instanceof A) { console.log(obj.x); } } fn(new A());```",
+        "options": ["1", "undefined", "Error", "null"],
+        "answer": "1",
+        "difficulty": "Medium",
+        "explanation": "The 'instanceof' type guard narrows 'obj' to 'A', allowing access to 'x'.",
+        "category": "Type Guards"
+    },
+    {
+        "question": "What is wrong with: ```typescript\nfunction isNumber(x: any): x is number { return typeof x === 'string'; }```",
+        "options": ["Incorrect type check", "No error", "Syntax error", "Missing return type"],
+        "answer": "Incorrect type check",
+        "difficulty": "Hard",
+        "explanation": "The type guard checks for 'string' but claims 'x is number', which is incorrect.",
+        "category": "Type Guards"
+    },
+    {
+        "question": "What does this log: ```typescript\nfunction isString(x: any): x is string { return typeof x === 'string'; } let x: any = 'test'; if (isString(x)) { console.log(x.length); }```",
+        "options": ["4", "undefined", "Error", "null"],
+        "answer": "4",
+        "difficulty": "Medium",
+        "explanation": "The user-defined type guard narrows 'x' to 'string', so 'x.length' logs 4.",
+        "category": "Type Guards"
+    },
+    {
+        "question": "What does this log: ```typescript\nfunction log(target: any, key: string) { console.log(key); } class C { @log x = 1; } new C();```",
+        "options": ["x", "undefined", "Error", "null"],
+        "answer": "x",
+        "difficulty": "Medium",
+        "explanation": "The property decorator logs the property name 'x' during class initialization.",
+        "category": "Decorators"
+    },
+    {
+        "question": "What is required to enable decorators?",
+        "options": ["'experimentalDecorators' in tsconfig.json", "'useDecorators' in tsconfig.json", "'strict' mode", "No configuration"],
+        "answer": "'experimentalDecorators' in tsconfig.json",
+        "difficulty": "Medium",
+        "explanation": "Decorators require 'experimentalDecorators: true' in tsconfig.json.",
+        "category": "Decorators"
+    },
+    {
+        "question": "What does a method decorator receive as arguments?",
+        "options": ["target, key, descriptor", "target, value", "key, value", "class, method"],
+        "answer": "target, key, descriptor",
+        "difficulty": "Medium",
+        "explanation": "Method decorators receive the target (class prototype), method name, and property descriptor.",
+        "category": "Decorators"
+    },
+    {
+        "question": "What is wrong with: ```typescript\n@decorator class C {}``` without enabling decorators?",
+        "options": ["Compilation error", "No error", "Runtime error", "Syntax error"],
+        "answer": "Compilation error",
+        "difficulty": "Medium",
+        "explanation": "Decorators require 'experimentalDecorators: true' or the compiler fails.",
+        "category": "Decorators"
+    },
+    {
+        "question": "What does this log: ```typescript\nfunction log(target: any, key: string, descriptor: PropertyDescriptor) { console.log(key); } class C { @log method() {} } new C();```",
+        "options": ["method", "undefined", "Error", "null"],
+        "answer": "method",
+        "difficulty": "Medium",
+        "explanation": "The method decorator logs the method name 'method' during class initialization.",
+        "category": "Decorators"
+    },
+    {
+        "question": "What is the output of: ```typescript\nlet x: any = 'hello'; console.log(x.toUpperCase());```",
+        "options": ["HELLO", "undefined", "Error", "null"],
+        "answer": "HELLO",
+        "difficulty": "Easy",
+        "explanation": "The 'any' type allows calling string methods, so 'toUpperCase' logs 'HELLO'.",
+        "category": "TypeScript"
+    },
+    {
+        "question": "What does 'module' specify in tsconfig.json?",
+        "options": ["Module system for compiled code", "Output directory", "Target JavaScript version", "Input file format"],
+        "answer": "Module system for compiled code",
+        "difficulty": "Medium",
+        "explanation": "'module' sets the module system (e.g., 'ESNext', 'CommonJS') for compiled output.",
+        "category": "TS Compiler"
+    },
+    {
+        "question": "How do you annotate an optional function parameter?",
+        "options": ["param?: type", "param: type?", "param: ?type", "param = type"],
+        "answer": "param?: type",
+        "difficulty": "Medium",
+        "explanation": "Optional parameters are marked with '?' in function declarations.",
+        "category": "Type Annotations"
+    },
+    {
+        "question": "What does this log: ```typescript\ninterface A { x: number; } let a: A = { x: 5 }; console.log(a.x);```",
+        "options": ["5", "undefined", "Error", "null"],
+        "answer": "5",
+        "difficulty": "Easy",
+        "explanation": "The interface ensures 'a' has an 'x' property, logging 5.",
+        "category": "Interfaces"
+    },
+    {
+        "question": "What is the output of: ```typescript\nclass A { constructor(public x: number) {} } let a = new A(10); console.log(a.x);```",
+        "options": ["10", "undefined", "Error", "null"],
         "answer": "10",
         "difficulty": "Medium",
-        "explanation": "The 'let' keyword is block-scoped, so the inner 'let x = 20' creates a new variable, and the outer x remains 10.",
-        "category": "Variable Scoping"
+        "explanation": "The 'public' parameter property assigns 'x' to the instance, logging 10.",
+        "category": "Classes"
     },
     {
-        "question": "What happens when you declare a variable with 'const' inside a block scope?",
-        "options": ["It’s accessible globally", "It’s accessible only within the block", "It’s hoisted to the function scope", "It causes a SyntaxError"],
-        "answer": "It’s accessible only within the block",
+        "question": "What does this log: ```typescript\nfunction fn<T extends { id: number }>(x: T) { console.log(x.id); } fn({ id: 42 });```",
+        "options": ["42", "undefined", "Error", "null"],
+        "answer": "42",
+        "difficulty": "Medium",
+        "explanation": "The generic constraint ensures 'x' has an 'id' property, logging 42.",
+        "category": "Generics"
+    },
+    {
+        "question": "What is the output of: ```typescript\nenum E { X = 'x' } console.log(E.X);```",
+        "options": ["x", "0", "Error", "undefined"],
+        "answer": "x",
+        "difficulty": "Medium",
+        "explanation": "String enums assign string values, so 'E.X' is 'x'.",
+        "category": "Enums"
+    },
+    {
+        "question": "What is inferred for: ```typescript\nlet x = { name: 'test' };```",
+        "options": ["{ name: string }", "any", "object", "string"],
+        "answer": "{ name: string }",
         "difficulty": "Easy",
-        "explanation": "'const' is block-scoped, so the variable is only accessible within the block it’s declared in.",
-        "category": "Variable Scoping"
+        "explanation": "TypeScript infers an object type with a 'name' property of type 'string'.",
+        "category": "Type Inference"
     },
     {
-        "question": "What is the output of: ```javascript\nfunction test() { console.log(x); var x = 5; }\ntest();```",
-        "options": ["5", "undefined", "ReferenceError", "null"],
+        "question": "What does this log: ```typescript\ntype A = { x: number }; let obj: A | null = null; console.log(obj?.x);```",
+        "options": ["undefined", "null", "Error", "0"],
         "answer": "undefined",
         "difficulty": "Medium",
-        "explanation": "Due to hoisting, 'var x' is declared but not initialized when console.log is called, so it outputs 'undefined'.",
-        "category": "Variable Scoping"
+        "explanation": "Optional chaining '?.' returns 'undefined' when 'obj' is null.",
+        "category": "Union and Intersection Types"
     },
     {
-        "question": "What is the scope of a variable declared without any keyword inside a function?",
-        "options": ["Block scope", "Function scope", "Global scope", "Module scope"],
-        "answer": "Global scope",
+        "question": "What does this log: ```typescript\nfunction fn(x: any): x is number { return typeof x === 'number'; } let x: any = 10; if (fn(x)) { console.log(x * 2); }```",
+        "options": ["20", "undefined", "Error", "null"],
+        "answer": "20",
         "difficulty": "Medium",
-        "explanation": "Without a keyword (var, let, const), a variable is implicitly declared in the global scope.",
-        "category": "Variable Scoping"
-    },
-    {
-        "question": "How do you validate that a drop-down menu (<select>) has a selected option?",
-        "options": ["Check if select.value is empty", "Check if select.selectedIndex is -1", "Check if select.options is null", "Check if select.text is undefined"],
-        "answer": "Check if select.selectedIndex is -1",
-        "difficulty": "Easy",
-        "explanation": "A drop-down’s selectedIndex is -1 when no option is selected, making it a reliable way to validate.",
-        "category": "Form validation: drop-downs"
-    },
-    {
-        "question": "What does select.options[select.selectedIndex].value return for a drop-down?",
-        "options": ["The text of the selected option", "The value of the selected option", "The index of the selected option", "The entire select element"],
-        "answer": "The value of the selected option",
-        "difficulty": "Medium",
-        "explanation": "select.options[select.selectedIndex].value retrieves the 'value' attribute of the currently selected option.",
-        "category": "Form validation: drop-downs"
-    },
-    {
-        "question": "How can you ensure at least one radio button in a group is selected?",
-        "options": ["Use input.checked for each radio", "Use radioGroup.value", "Use radioGroup.selected", "Use input.value"],
-        "answer": "Use input.checked for each radio",
-        "difficulty": "Easy",
-        "explanation": "Loop through radio buttons with the same 'name' attribute and check if any has 'input.checked' as true.",
-        "category": "Form validation: radio buttons"
-    },
-    {
-        "question": "What is the correct way to get the value of a selected radio button?",
-        "options": ["document.querySelector('input[type=radio]:checked').value", "document.getElementById('radio').value", "document.querySelector('input[type=radio]').value", "document.getElementsByName('radio').value"],
-        "answer": "document.querySelector('input[type=radio]:checked').value",
-        "difficulty": "Medium",
-        "explanation": "The ':checked' pseudo-class selects the radio button that is currently checked, and '.value' retrieves its value.",
-        "category": "Form validation: radio buttons"
-    },
-    {
-        "question": "Which regex pattern validates a US ZIP code (5 digits or 5+4)?",
-        "options": ["/^\\d{5}(-\\d{4})?$/", "/^\\d{5}$/", "/^\\d{5}-\\d{4}$/", "/^[0-9]{5,9}$/"],
-        "answer": "/^\\d{5}(-\\d{4})?$/",
-        "difficulty": "Medium",
-        "explanation": "The pattern allows 5 digits optionally followed by a hyphen and 4 digits, covering both ZIP formats.",
-        "category": "Form validation: ZIP codes"
-    },
-    {
-        "question": "What does the regex /^\\d{5}$/ validate for a ZIP code?",
-        "options": ["5-digit ZIP code", "5 or 9-digit ZIP code", "Any numeric string", "ZIP code with letters"],
-        "answer": "5-digit ZIP code",
-        "difficulty": "Easy",
-        "explanation": "The pattern /^\\d{5}$/ matches exactly 5 digits, suitable for basic US ZIP codes.",
-        "category": "Form validation: ZIP codes"
-    },
-    {
-        "question": "Which regex is best for validating an email address?",
-        "options": ["/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/", "/^\\w+@\\w+\\.\\w+$/", "/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2}$/", "/^.*@.*\\..*$/"],
-        "answer": "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/",
-        "difficulty": "Hard",
-        "explanation": "This regex allows common email characters before and after the '@', a domain, and a TLD of 2+ characters.",
-        "category": "Form validation: email"
-    },
-    {
-        "question": "What happens if an email input fails regex validation?",
-        "options": ["Form submission stops", "Browser shows a default error", "Nothing, unless handled in JS", "The input is cleared"],
-        "answer": "Nothing, unless handled in JS",
-        "difficulty": "Medium",
-        "explanation": "HTML5 email validation triggers browser errors, but custom regex validation in JS requires manual handling.",
-        "category": "Form validation: email"
-    },
-    {
-        "question": "What does a 'try...catch' block do in JavaScript?",
-        "options": ["Declares variables", "Handles errors", "Loops through arrays", "Defines functions"],
-        "answer": "Handles errors",
-        "difficulty": "Easy",
-        "explanation": "The 'try...catch' block catches exceptions thrown in the 'try' block and handles them in the 'catch' block.",
-        "category": "Exceptions: try and catch"
-    },
-    {
-        "question": "What is logged in: ```javascript\ntry { throw new Error('Oops'); } catch (e) { console.log(e.message); }```",
-        "options": ["Oops", "Error", "undefined", "null"],
-        "answer": "Oops",
-        "difficulty": "Medium",
-        "explanation": "The 'throw new Error('Oops')' creates an error with the message 'Oops', which is caught and logged.",
-        "category": "Exceptions: try and catch"
-    },
-    {
-        "question": "What does the 'throw' statement do?",
-        "options": ["Exits a function", "Throws an exception", "Logs a message", "Declares a variable"],
-        "answer": "Throws an exception",
-        "difficulty": "Easy",
-        "explanation": "The 'throw' statement creates and throws a custom exception, often used with 'try...catch'.",
-        "category": "Exceptions: throw"
-    },
-    {
-        "question": "What happens in: ```javascript\nthrow 'CustomError';```?",
-        "options": ["Logs 'CustomError'", "Throws a string as an exception", "Creates a variable", "Causes a SyntaxError"],
-        "answer": "Throws a string as an exception",
-        "difficulty": "Medium",
-        "explanation": "The 'throw' statement can throw any value, like a string, which can be caught in a 'catch' block.",
-        "category": "Exceptions: throw"
-    },
-    {
-        "question": "How do you add an event listener to a button in JavaScript?",
-        "options": ["button.addEventListener('click', handler)", "button.onClick(handler)", "button.attachEvent('click', handler)", "button.event('click', handler)"],
-        "answer": "button.addEventListener('click', handler)",
-        "difficulty": "Easy",
-        "explanation": "'addEventListener' is the standard way to attach an event handler to an element for events like 'click'.",
-        "category": "Handling events within JavaScript"
-    },
-    {
-        "question": "What does 'event.preventDefault()' do in an event handler?",
-        "options": ["Stops event propagation", "Prevents the default action", "Removes the event listener", "Logs the event"],
-        "answer": "Prevents the default action",
-        "difficulty": "Medium",
-        "explanation": "'preventDefault()' stops the browser’s default action, like form submission or link navigation.",
-        "category": "Handling events within JavaScript"
-    },
-    {
-        "question": "What is a 'junk artifact' in the DOM?",
-        "options": ["A text node", "A comment node", "An element node", "A script node"],
-        "answer": "A comment node",
-        "difficulty": "Medium",
-        "explanation": "Junk artifacts, like comment nodes, are non-element nodes (nodeType 8) that don’t affect rendering.",
-        "category": "The DOM: Junk artifacts and nodeType"
-    },
-    {
-        "question": "What is the nodeType of an HTML element?",
-        "options": ["1", "3", "8", "9"],
-        "answer": "1",
-        "difficulty": "Easy",
-        "explanation": "The nodeType of an HTML element is 1, while text nodes are 3, and comment nodes are 8.",
-        "category": "The DOM: Junk artifacts and nodeType"
-    },
-    {
-        "question": "Which method targets an element by its ID?",
-        "options": ["document.querySelector()", "document.getElementById()", "document.getElementsByClassName()", "document.getElementsByTagName()"],
-        "answer": "document.getElementById()",
-        "difficulty": "Easy",
-        "explanation": "'getElementById()' is the most direct way to target an element by its unique ID.",
-        "category": "The DOM: More ways to target elements"
-    },
-    {
-        "question": "How do you select all elements with a specific class?",
-        "options": ["document.querySelectorAll('.class')", "document.getElementByClass('.class')", "document.getElementsByClassName('class')", "Both A and C"],
-        "answer": "Both A and C",
-        "difficulty": "Medium",
-        "explanation": "Both 'querySelectorAll' and 'getElementsByClassName' can select elements by class, returning a NodeList or HTMLCollection.",
-        "category": "The DOM: More ways to target elements"
-    },
-    {
-        "question": "How do you get the tag name of a DOM element?",
-        "options": ["element.tagName", "element.nodeName", "element.name", "Both A and B"],
-        "answer": "Both A and B",
-        "difficulty": "Medium",
-        "explanation": "Both 'tagName' and 'nodeName' return the tag name of an element, like 'DIV' or 'P'.",
-        "category": "The DOM: Getting a target's name"
-    },
-    {
-        "question": "What does element.tagName return for a <div> element?",
-        "options": ["div", "DIV", "<div>", "null"],
-        "answer": "DIV",
-        "difficulty": "Easy",
-        "explanation": "'tagName' returns the tag name in uppercase, so a <div> element returns 'DIV'.",
-        "category": "The DOM: Getting a target's name"
-    },
-    {
-        "question": "How do you count the number of <p> elements in a document?",
-        "options": ["document.getElementsByTagName('p').length", "document.querySelector('p').count", "document.getElementsByClassName('p').length", "document.querySelectorAll('p').count"],
-        "answer": "document.getElementsByTagName('p').length",
-        "difficulty": "Easy",
-        "explanation": "'getElementsByTagName' returns an HTMLCollection, and '.length' gives the count of matching elements.",
-        "category": "The DOM: Counting elements"
-    },
-    {
-        "question": "What does document.querySelectorAll('div').length return?",
-        "options": ["Number of divs", "Number of all elements", "Number of classes", "Number of attributes"],
-        "answer": "Number of divs",
-        "difficulty": "Easy",
-        "explanation": "'querySelectorAll('div')' returns a NodeList of all <div> elements, and '.length' counts them.",
-        "category": "The DOM: Counting elements"
-    },
-    {
-        "question": "How do you check if an element has a specific attribute?",
-        "options": ["element.hasAttribute('name')", "element.getAttribute('name')", "element.attribute('name')", "element.checkAttribute('name')"],
-        "answer": "element.hasAttribute('name')",
-        "difficulty": "Easy",
-        "explanation": "'hasAttribute' checks if an element has a specified attribute, returning true or false.",
-        "category": "The DOM: Attributes"
-    },
-    {
-        "question": "How do you set an attribute on a DOM element?",
-        "options": ["element.setAttribute('name', 'value')", "element.attribute('name', 'value')", "element.name = 'value'", "element.addAttribute('name', 'value')"],
-        "answer": "element.setAttribute('name', 'value')",
-        "difficulty": "Easy",
-        "explanation": "'setAttribute' sets or updates an attribute’s value on a DOM element.",
-        "category": "The DOM: Attributes"
-    },
-    {
-        "question": "How do you get all attribute names of an element?",
-        "options": ["Array.from(element.attributes).map(attr => attr.name)", "element.getAttributeNames()", "element.attributes.map(attr => attr.name)", "Both A and B"],
-        "answer": "Both A and B",
-        "difficulty": "Medium",
-        "explanation": "'getAttributeNames()' directly returns an array of attribute names, or you can map 'element.attributes'.",
-        "category": "The DOM: Attribute names and values"
-    },
-    {
-        "question": "What does element.getAttribute('id') return?",
-        "options": ["The element’s ID", "The element’s class", "The element’s tag", "null if no ID"],
-        "answer": "null if no ID",
-        "difficulty": "Medium",
-        "explanation": "'getAttribute('id')' returns the ID’s value or null if the attribute doesn’t exist.",
-        "category": "The DOM: Attribute names and values"
-    },
-    {
-        "question": "How do you create a new DOM element?",
-        "options": ["document.createElement('tag')", "document.newElement('tag')", "document.createNode('tag')", "document.addElement('tag')"],
-        "answer": "document.createElement('tag')",
-        "difficulty": "Easy",
-        "explanation": "'createElement' creates a new DOM element with the specified tag name.",
-        "category": "The DOM: Adding nodes"
-    },
-    {
-        "question": "What does document.createElement('div') return?",
-        "options": ["A new div element", "A text node", "A comment node", "An attribute"],
-        "answer": "A new div element",
-        "difficulty": "Easy",
-        "explanation": "'createElement('div')' returns a new <div> element, not yet added to the DOM.",
-        "category": "The DOM: Adding nodes"
-    },
-    {
-        "question": "How do you append a node to an element’s children?",
-        "options": ["element.appendChild(node)", "element.addChild(node)", "element.insertChild(node)", "element.append(node)"],
-        "answer": "element.appendChild(node)",
-        "difficulty": "Easy",
-        "explanation": "'appendChild' adds a node as the last child of the specified element.",
-        "category": "The DOM: Inserting nodes"
-    },
-    {
-        "question": "How do you insert a node before an existing child?",
-        "options": ["parent.insertBefore(newNode, existingNode)", "parent.insertChild(newNode, existingNode)", "parent.addBefore(newNode, existingNode)", "parent.prepend(newNode)"],
-        "answer": "parent.insertBefore(newNode, existingNode)",
-        "difficulty": "Medium",
-        "explanation": "'insertBefore' inserts a new node before the specified existing child in the parent.",
-        "category": "The DOM: Inserting nodes"
-    },
-    {
-        "question": "What is a JavaScript object?",
-        "options": ["A collection of properties", "A function", "A variable", "A DOM element"],
-        "answer": "A collection of properties",
-        "difficulty": "Easy",
-        "explanation": "A JavaScript object is a collection of key-value pairs, where values can be data or functions.",
-        "category": "Objects"
-    },
-    {
-        "question": "How do you access a property of an object?",
-        "options": ["object.property or object['property']", "object.getProperty()", "object(property)", "object->property"],
-        "answer": "object.property or object['property']",
-        "difficulty": "Easy",
-        "explanation": "Properties can be accessed using dot notation or bracket notation.",
-        "category": "Objects: Properties"
-    },
-    {
-        "question": "How do you add a method to an object?",
-        "options": ["object.method = function() {}", "object.addMethod(function)", "object.method(function)", "object.setMethod()"],
-        "answer": "object.method = function() {}",
-        "difficulty": "Easy",
-        "explanation": "A method is added by assigning a function to a property of the object.",
-        "category": "Objects: Methods"
-    },
-    {
-        "question": "What is a constructor in JavaScript?",
-        "options": ["A function to create objects", "A loop", "An event handler", "A variable"],
-        "answer": "A function to create objects",
-        "difficulty": "Medium",
-        "explanation": "A constructor is a function used with 'new' to create and initialize objects.",
-        "category": "Objects: Constructors"
-    },
-    {
-        "question": "What is the output of: ```javascript\nfunction Person(name) { this.name = name; }\nlet p = new Person('Alice');\nconsole.log(p.name);```",
-        "options": ["Alice", "Person", "undefined", "null"],
-        "answer": "Alice",
-        "difficulty": "Medium",
-        "explanation": "The constructor 'Person' sets the 'name' property, and 'new' creates an object with that property.",
-        "category": "Objects: Constructors"
-    },
-    {
-        "question": "How do you add a method to a constructor’s prototype?",
-        "options": ["Constructor.prototype.method = function() {}", "Constructor.method = function() {}", "Constructor.addMethod()", "Constructor.setMethod()"],
-        "answer": "Constructor.prototype.method = function() {}",
-        "difficulty": "Medium",
-        "explanation": "Methods added to the prototype are shared by all instances of the constructor.",
-        "category": "Objects: Constructors for methods"
-    },
-    {
-        "question": "What is a prototype in JavaScript?",
-        "options": ["An object for inheritance", "A function", "A variable", "A DOM node"],
-        "answer": "An object for inheritance",
-        "difficulty": "Medium",
-        "explanation": "Prototypes are objects from which other objects inherit properties and methods.",
-        "category": "Objects: Prototypes"
-    },
-    {
-        "question": "How do you check if an object has a property?",
-        "options": ["'property' in object", "object.hasProperty('property')", "object.propertyExists('property')", "object.getProperty('property')"],
-        "answer": "'property' in object",
-        "difficulty": "Medium",
-        "explanation": "The 'in' operator checks if a property exists in an object or its prototype chain.",
-        "category": "Objects: Checking for properties and methods"
-    },
-    {
-        "question": "How do you check if a property is directly on an object (not inherited)?",
-        "options": ["object.hasOwnProperty('property')", "object.owns('property')", "object.property('property')", "'property' in object"],
-        "answer": "object.hasOwnProperty('property')",
-        "difficulty": "Medium",
-        "explanation": "'hasOwnProperty' checks if a property exists directly on the object, not its prototype.",
-        "category": "Objects: Checking for properties and methods"
-    },
-    {
-        "question": "How do you get the current URL of a page?",
-        "options": ["window.location.href", "document.url", "window.url", "document.location"],
-        "answer": "window.location.href",
-        "difficulty": "Easy",
-        "explanation": "'window.location.href' returns the full URL of the current page.",
-        "category": "Browser control: Getting and setting the URL"
-    },
-    {
-        "question": "How do you set a new URL for the page?",
-        "options": ["window.location.href = 'new-url'", "window.url = 'new-url'", "document.location('new-url')", "window.setUrl('new-url')"],
-        "answer": "window.location.href = 'new-url'",
-        "difficulty": "Easy",
-        "explanation": "Assigning a new value to 'window.location.href' navigates to the new URL.",
-        "category": "Browser control: Getting and setting the URL"
-    },
-    {
-        "question": "What does window.location.assign('new-url') do?",
-        "options": ["Navigates to a new URL", "Reloads the page", "Clears the URL", "Opens a popup"],
-        "answer": "Navigates to a new URL",
-        "difficulty": "Medium",
-        "explanation": "'window.location.assign' navigates to a new URL, similar to setting 'window.location.href'.",
-        "category": "Browser control: Getting and setting the URL another way"
-    },
-    {
-        "question": "How do you go back to the previous page?",
-        "options": ["window.history.back()", "window.back()", "window.history.prev()", "window.location.back()"],
-        "answer": "window.history.back()",
-        "difficulty": "Easy",
-        "explanation": "'window.history.back()' navigates to the previous page in the browser’s history.",
-        "category": "Browser control: Forward and reverse"
-    },
-    {
-        "question": "How do you go forward in browser history?",
-        "options": ["window.history.forward()", "window.forward()", "window.history.next()", "window.location.forward()"],
-        "answer": "window.history.forward()",
-        "difficulty": "Easy",
-        "explanation": "'window.history.forward()' navigates to the next page in the browser’s history.",
-        "category": "Browser control: Forward and reverse"
-    },
-    {
-        "question": "How do you set the content of the entire page?",
-        "options": ["document.body.innerHTML = 'content'", "window.content = 'content'", "document.write('content')", "Both A and C"],
-        "answer": "Both A and C",
-        "difficulty": "Medium",
-        "explanation": "'document.body.innerHTML' and 'document.write' can both set the page’s content, though 'write' is less common.",
-        "category": "Browser control: Filling the window with content"
-    },
-    {
-        "question": "How do you resize a browser window?",
-        "options": ["window.resizeTo(width, height)", "window.setSize(width, height)", "window.size(width, height)", "document.resize(width, height)"],
-        "answer": "window.resizeTo(width, height)",
-        "difficulty": "Medium",
-        "explanation": "'window.resizeTo' resizes the browser window to the specified dimensions.",
-        "category": "Browser control: Controlling the window's size and location"
-    },
-    {
-        "question": "How do you move a window to a specific position?",
-        "options": ["window.moveTo(x, y)", "window.setPosition(x, y)", "window.location(x, y)", "window.move(x, y)"],
-        "answer": "window.moveTo(x, y)",
-        "difficulty": "Medium",
-        "explanation": "'window.moveTo' moves the browser window to the specified coordinates.",
-        "category": "Browser control: Controlling the window's size and location"
-    },
-    {
-        "question": "How can you detect if popups are blocked?",
-        "options": ["Check if window.open() returns null", "Check window.popupBlocked", "Check document.popup", "Check window.isBlocked"],
-        "answer": "Check if window.open() returns null",
-        "difficulty": "Medium",
-        "explanation": "If 'window.open()' returns null, it indicates the popup was blocked by the browser.",
-        "category": "Browser control: Testing for popup blockers"
-    },
-    {
-        "question": "How do you validate a text field is not empty?",
-        "options": ["input.value.trim() !== ''", "input.text !== ''", "input.value.length > 0", "Both A and C"],
-        "answer": "Both A and C",
-        "difficulty": "Easy",
-        "explanation": "Both checking 'value.length > 0' and 'value.trim() !== ''' validate a non-empty text field, with 'trim()' handling whitespace.",
-        "category": "Form validation: text fields"
-    },
-    {
-        "question": "What does input.value.trim() do in form validation?",
-        "options": ["Removes whitespace from both ends", "Converts to lowercase", "Removes special characters", "Checks for numbers"],
-        "answer": "Removes whitespace from both ends",
-        "difficulty": "Easy",
-        "explanation": "'trim()' removes leading and trailing whitespace from a string, useful for validating text fields.",
-        "category": "Form validation: text fields"
+        "explanation": "The user-defined type guard narrows 'x' to 'number', so 'x * 2' logs 20.",
+        "category": "Type Guards"
     }
 ]
 
