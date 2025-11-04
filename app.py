@@ -8,113 +8,804 @@ st.set_page_config(page_title="TypeScript Quiz - 100 Questions", page_icon="🟦
 
 # Quiz data (your full 100 questions)
 quiz = [
-    # Type Annotations (10)
-    {"question": "Which is a valid type annotation for a function returning void?", "options": ["(): void", "function(): void", "() => void", "function => void"], "answer": "() => void", "explanation": "Arrow functions use `=> void` for return type.", "category": "Type Annotations"},
-    {"question": "How do you annotate a parameter that can be null or undefined?", "options": ["x: any", "x?: string", "x: string | null", "x: string!"], "answer": "x: string | null", "explanation": "Use union with `null` or `undefined`.", "category": "Type Annotations"},
-    {"question": "What does `!` mean in `user!.name`?", "options": ["Optional chaining", "Non-null assertion", "Definite assignment", "Type guard"], "answer": "Non-null assertion", "explanation": "Tells compiler: 'I know this is not null'.", "category": "Type Annotations"},
-    {"question": "Which is NOT a primitive type?", "options": ["string", "number", "object", "boolean"], "answer": "object", "explanation": "`object` is not primitive; primitives are string, number, boolean, etc.", "category": "Type Annotations"},
-    {"question": "How to annotate a function that never returns?", "options": ["(): void", "(): never", "(): undefined", "(): null"], "answer": "(): never", "explanation": "`never` means function throws or loops forever.", "category": "Type Annotations"},
-    {"question": "What is `unknown` type?", "options": ["Like any but safer", "Only for objects", "Top type", "Bottom type"], "answer": "Like any but safer", "explanation": "Must narrow `unknown` before use.", "category": "Type Annotations"},
-    {"question": "Can you annotate array as `string[]`?", "options": ["Yes", "No", "Only in ES6", "Only with generics"], "answer": "Yes", "explanation": "`string[]` and `Array<string>` both work.", "category": "Type Annotations"},
-    {"question": "What is `readonly` modifier?", "options": ["Prevents reassignment", "Prevents reading", "Runtime check", "Compiler error only"], "answer": "Prevents reassignment", "explanation": "Compiler blocks mutation of readonly properties.", "category": "Type Annotations"},
-    {"question": "How to annotate a tuple?", "options": ["[string, number]", "{0: string, 1: number}", "Tuple<string, number>", "string | number[]"], "answer": "[string, number]", "explanation": "Fixed-length arrays use tuple syntax.", "category": "Type Annotations"},
-    {"question": "What is `as const`?", "options": ["Makes object readonly & literal", "Casts to any", "Enables strict mode", "Runtime assertion"], "answer": "Makes object readonly & literal", "explanation": "Preserves literal types.", "category": "Type Annotations"},
+  {
+    "question": "What does the 'target' option specify in tsconfig.json?",
+    "options": [
+      "The JavaScript version the TypeScript code is compiled to",
+      "The target directory for compiled files",
+      "The target browser",
+      "The target platform"
+    ],
+    "answer": "The JavaScript version the TypeScript code is compiled to",
+    "difficulty": "Easy",
+    "explanation": "The 'target' in tsconfig.json specifies the ECMAScript version to compile to (e.g., ES5, ES6, ES2020).",
+    "category": "TS Compiler"
+  },
+  {
+    "question": "Which flag enables strict type-checking?",
+    "options": ["strict", "noImplicitAny", "strictNullChecks", "alwaysStrict"],
+    "answer": "strict",
+    "difficulty": "Easy",
+    "explanation": "'strict: true' turns on all strict family options including noImplicitAny, strictNullChecks, etc.",
+    "category": "TS Compiler"
+  },
+  {
+    "question": "What does 'outDir' control?",
+    "options": [
+      "Directory where .js files are emitted",
+      "Directory for source .ts files",
+      "Directory for declaration files",
+      "Directory for map files"
+    ],
+    "answer": "Directory where .js files are emitted",
+    "difficulty": "Easy",
+    "explanation": "'outDir' specifies the output folder for compiled JavaScript files.",
+    "category": "TS Compiler"
+  },
+  {
+    "question": "Which option generates .d.ts files?",
+    "options": ["declaration", "emitDeclarationOnly", "declarationMap", "sourceMap"],
+    "answer": "declaration",
+    "difficulty": "Easy",
+    "explanation": "Set 'declaration: true' to emit type declaration (.d.ts) files.",
+    "category": "TS Compiler"
+  },
+  {
+    "question": "What is the default value of 'module' for modern projects?",
+    "options": ["CommonJS", "ESNext", "AMD", "System"],
+    "answer": "ESNext",
+    "difficulty": "Easy",
+    "explanation": "When 'target' is ES2015+, the default module is 'ESNext'.",
+    "category": "TS Compiler"
+  },
+  {
+    "question": "Which flag skips type checking of declaration files?",
+    "options": ["skipLibCheck", "skipDefaultLibCheck", "noLib", "fastCheck"],
+    "answer": "skipLibCheck",
+    "difficulty": "Easy",
+    "explanation": "'skipLibCheck: true' speeds up compilation by skipping .d.ts files.",
+    "category": "TS Compiler"
+  },
+  {
+    "question": "What does 'noEmitOnError' do?",
+    "options": [
+      "Prevents .js output if there are type errors",
+      "Deletes previous output on error",
+      "Emits only on zero errors",
+      "Emits only declaration files on error"
+    ],
+    "answer": "Prevents .js output if there are type errors",
+    "difficulty": "Easy",
+    "explanation": "When true, no JavaScript is emitted if compilation fails type-checking.",
+    "category": "TS Compiler"
+  },
+  {
+    "question": "Which option enables source maps?",
+    "options": ["sourceMap", "inlineSourceMap", "mapRoot", "sourceRoot"],
+    "answer": "sourceMap",
+    "difficulty": "Easy",
+    "explanation": "'sourceMap: true' generates .map files for debugging.",
+    "category": "TS Compiler"
+  },
+  {
+    "question": "What is the purpose of 'rootDir'?",
+    "options": [
+      "Defines the root folder for input files",
+      "Defines the root folder for output",
+      "Sets the project root for tsconfig",
+      "Sets the root for node_modules"
+    ],
+    "answer": "Defines the root folder for input files",
+    "difficulty": "Easy",
+    "explanation": "Helps the compiler resolve relative paths and mirrors folder structure in outDir.",
+    "category": "TS Compiler"
+  },
+  {
+    "question": "Which flag allows JavaScript files in the project?",
+    "options": ["allowJs", "checkJs", "emitJs", "includeJs"],
+    "answer": "allowJs",
+    "difficulty": "Easy",
+    "explanation": "'allowJs: true' lets .js files be imported and compiled.",
+    "category": "TS Compiler"
+  },
 
-    # Interfaces (10)
-    {"question": "Can interfaces be merged?", "options": ["Yes", "No", "Only in same file", "Only with classes"], "answer": "Yes", "explanation": "Declaration merging combines same-name interfaces.", "category": "Interfaces"},
-    {"question": "What is an index signature?", "options": ["[key: string]: string", "[index: number]: any", "Both", "Neither"], "answer": "Both", "explanation": "Allows dynamic keys.", "category": "Interfaces"},
-    {"question": "Can interface extend a class?", "options": ["Yes", "No", "Only abstract", "Only with implements"], "answer": "Yes", "explanation": "Extracts public/protected members.", "category": "Interfaces"},
-    {"question": "What does `implements` do?", "options": ["Checks class conforms to interface", "Inherits methods", "Creates instance", "Copies properties"], "answer": "Checks class conforms to interface", "explanation": "Enforces structure.", "category": "Interfaces"},
-    {"question": "Can interface have private members?", "options": ["No", "Yes", "Only readonly", "Only static"], "answer": "No", "explanation": "Interfaces describe public shape.", "category": "Interfaces"},
-    {"question": "How to make property optional?", "options": ["name?: string", "name: string?", "optional name: string", "?name: string"], "answer": "name?: string", "explanation": "Question mark after name.", "category": "Interfaces"},
-    {"question": "Can interface describe a function?", "options": ["Yes", "No", "Only arrow", "Only class"], "answer": "Yes", "explanation": "Call signatures allowed.", "category": "Interfaces"},
-    {"question": "What is a hybrid type?", "options": ["Function + object", "Class + interface", "Union + intersection", "Generic + conditional"], "answer": "Function + object", "explanation": "Like jQuery: callable and has properties.", "category": "Interfaces"},
-    {"question": "Can interface extend multiple interfaces?", "options": ["Yes", "No", "Only two", "Only with &"], "answer": "Yes", "explanation": "`extends A, B` is valid.", "category": "Interfaces"},
-    {"question": "What is `interface A extends B, C {}`?", "options": ["Intersection", "Union", "Merge", "Error"], "answer": "Intersection", "explanation": "Must satisfy both B and C.", "category": "Interfaces"},
+  // Type Annotations (10)
+  {
+    "question": "How do you annotate a variable as string?",
+    "options": ["let name: String", "let name: string", "let name = String", "let name: 'string'"],
+    "answer": "let name: string",
+    "difficulty": "Easy",
+    "explanation": "Lowercase 'string' is the primitive type; 'String' is the wrapper object.",
+    "category": "Type Annotations"
+  },
+  {
+    "question": "Which is the correct array type annotation?",
+    "options": ["number[]", "Array<number>", "Both", "Neither"],
+    "answer": "Both",
+    "difficulty": "Easy",
+    "explanation": "Both syntaxes are valid and equivalent.",
+    "category": "Type Annotations"
+  },
+  {
+    "question": "How do you type a function parameter?",
+    "options": ["(x: number) => {}", "(x) => number {}", "function(x: number)", "function x(number)"],
+    "answer": "(x: number) => {}",
+    "difficulty": "Easy",
+    "explanation": "Arrow functions annotate parameters directly after the name.",
+    "category": "Type Annotations"
+  },
+  {
+    "question": "What is the type for 'null' and 'undefined'?",
+    "options": ["null | undefined", "void", "any", "unknown"],
+    "answer": "null | undefined",
+    "difficulty": "Easy",
+    "explanation": "They are literal types; use union for optional values.",
+    "category": "Type Annotations"
+  },
+  {
+    "question": "How do you annotate a tuple?",
+    "options": ["[string, number]", "{0: string, 1: number}", "Array<string | number>", "Tuple<string, number>"],
+    "answer": "[string, number]",
+    "difficulty": "Easy",
+    "explanation": "Square brackets define fixed-length tuples.",
+    "category": "Type Annotations"
+  },
+  {
+    "question": "Which is a correct 'any' usage?",
+    "options": ["let x: any", "let x = any", "let x: Any", "let x as any"],
+    "answer": "let x: any",
+    "difficulty": "Easy",
+    "explanation": "'any' disables type checking for that value.",
+    "category": "Type Annotations"
+  },
+  {
+    "question": "What does 'never' represent?",
+    "options": ["A value that never occurs", "A function that never returns", "Both", "An empty type"],
+    "answer": "Both",
+    "difficulty": "Medium",
+    "explanation": "Used for impossible code paths or functions that throw/loop forever.",
+    "category": "Type Annotations"
+  },
+  {
+    "question": "How do you type an object with dynamic keys?",
+    "options": ["{[key: string]: number}", "Record<string, number>", "Both", "Map<string, number>"],
+    "answer": "Both",
+    "difficulty": "Medium",
+    "explanation": "Record<Keys, Type> is a utility type for index signatures.",
+    "category": "Type Annotations"
+  },
+  {
+    "question": "Which is the correct 'void' return type?",
+    "options": ["() => void", "() => undefined", "Both", "() => null"],
+    "answer": "Both",
+    "difficulty": "Easy",
+    "explanation": "void functions may return undefined but not other values.",
+    "category": "Type Annotations"
+  },
+  {
+    "question": "How do you annotate a function that returns a Promise?",
+    "options": ["Promise<T>", "async T", "Future<T>", "Thenable<T>"],
+    "answer": "Promise<T>",
+    "difficulty": "Easy",
+    "explanation": "Use Promise<string> for async functions returning string.",
+    "category": "Type Annotations"
+  },
 
-    # Classes (10)
-    {"question": "What does `private` mean?", "options": ["Accessible only in class", "In subclasses too", "Public", "Static"], "answer": "Accessible only in class", "explanation": "Not even in subclasses.", "category": "Classes"},
-    {"question": "What is `protected`?", "options": ["Class + subclasses", "Only class", "Public", "Static"], "answer": "Class + subclasses", "explanation": "Inheritance access.", "category": "Classes"},
-    {"question": "Can constructor be async?", "options": ["No", "Yes", "Only in ESNext", "Only with decorators"], "answer": "No", "explanation": "Constructors cannot be async.", "category": "Classes"},
-    {"question": "What are parameter properties?", "options": ["public name: string in constructor", "name: string in body", "this.name = name", "All of the above"], "answer": "public name: string in constructor", "explanation": "Shorthand for field + assignment.", "category": "Classes"},
-    {"question": "Can class have multiple constructors?", "options": ["No", "Yes, via overloading", "Yes, directly", "Only static"], "answer": "Yes, via overloading", "explanation": "Signature overloads, one body.", "category": "Classes"},
-    {"question": "What is `abstract` class?", "options": ["Cannot be instantiated", "Can be instantiated", "No methods", "No properties"], "answer": "Cannot be instantiated", "explanation": "Base class only.", "category": "Classes"},
-    {"question": "What is `static`?", "options": ["Belongs to class", "Belongs to instance", "Readonly", "Private"], "answer": "Belongs to class", "explanation": "ClassName.prop", "category": "Classes"},
-    {"question": "Can `readonly` be used on methods?", "options": ["No", "Yes", "Only static", "Only private"], "answer": "No", "explanation": "Only on properties.", "category": "Classes"},
-    {"question": "What is `super()`?", "options": ["Calls parent constructor", "Calls parent method", "Both", "Neither"], "answer": "Both", "explanation": "Depends on context.", "category": "Classes"},
-    {"question": "Can class implement multiple interfaces?", "options": ["Yes", "No", "Only two", "Only with extends"], "answer": "Yes", "explanation": "`implements A, B`", "category": "Classes"},
+  // Interfaces (10)
+  {
+    "question": "What keyword declares an interface?",
+    "options": ["interface", "type", "class", "declare"],
+    "answer": "interface",
+    "difficulty": "Easy",
+    "explanation": "'interface' defines a contract for object shape.",
+    "category": "Interfaces"
+  },
+  {
+    "question": "Can interfaces be extended?",
+    "options": ["Yes", "No", "Only with classes", "Only with types"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "Use 'extends' to inherit from one or more interfaces.",
+    "category": "Interfaces"
+  },
+  {
+    "question": "How do you make a property optional?",
+    "options": ["?", "!", "*", "~"],
+    "answer": "?",
+    "difficulty": "Easy",
+    "explanation": "name?: string means the property may be missing.",
+    "category": "Interfaces"
+  },
+  {
+    "question": "Can interfaces have readonly properties?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "'readonly id: number' prevents reassignment after construction.",
+    "category": "Interfaces"
+  },
+  {
+    "question": "What is function interface syntax?",
+    "options": ["interface Fn { (x: number): string }", "interface Fn = (x: number) => string", "Both", "Neither"],
+    "answer": "interface Fn { (x: number): string }",
+    "difficulty": "Medium",
+    "explanation": "Call signatures inside interfaces define function types.",
+    "category": "Interfaces"
+  },
+  {
+    "question": "Can interfaces describe index signatures?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "[key: string]: number allows any string key with number value.",
+    "category": "Interfaces"
+  },
+  {
+    "question": "Can you merge interface declarations?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Medium",
+    "explanation": "Declaring the same interface name multiple times merges members.",
+    "category": "Interfaces"
+  },
+  {
+    "question": "What is hybrid interface?",
+    "options": ["Interface with both properties and call signature", "Interface that extends class", "Interface with generics", "All of the above"],
+    "answer": "Interface with both properties and call signature",
+    "difficulty": "Hard",
+    "explanation": "E.g., interface Counter { (x: number): void; count: number }",
+    "category": "Interfaces"
+  },
+  {
+    "question": "Can interfaces extend classes?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Medium",
+    "explanation": "Interface can extend a class to inherit its instance members.",
+    "category": "Interfaces"
+  },
+  {
+    "question": "Which is true about interface vs type?",
+    "options": ["Interfaces can be merged, types cannot", "Types can be merged, interfaces cannot", "Both can be merged", "Neither can be merged"],
+    "answer": "Interfaces can be merged, types cannot",
+    "difficulty": "Medium",
+    "explanation": "Declaration merging is unique to interfaces.",
+    "category": "Interfaces"
+  },
 
-    # Generics (10)
-    {"question": "What is `<T>`?", "options": ["Type parameter", "HTML tag", "Template", "Tuple"], "answer": "Type parameter", "explanation": "Placeholder for type.", "category": "Generics"},
-    {"question": "What does `extends` do in `<T extends string>`?", "options": ["Constraints T to string or subtype", "T must be string", "T can be any", "Error"], "answer": "Constraints T to string or subtype", "explanation": "Bounds the generic.", "category": "Generics"},
-    {"question": "What is `keyof T`?", "options": ["Union of keys", "Values", "Length", "Type"], "answer": "Union of keys", "explanation": "String literal union of property names.", "category": "Generics"},
-    {"question": "What is `typeof` in generics?", "options": ["Gets type of value", "Runtime type", "Compiler only", "Both"], "answer": "Gets type of value", "explanation": "Type query operator.", "category": "Generics"},
-    {"question": "Can generics have default types?", "options": ["Yes", "No", "Only in functions", "Only in classes"], "answer": "Yes", "explanation": "`<T = string>`", "category": "Generics"},
-    {"question": "What is conditional type?", "options": ["T extends U ? X : Y", "if/else", "Runtime", "Both"], "answer": "T extends U ? X : Y", "explanation": "Type-level ternary.", "category": "Generics"},
-    {"question": "What is `infer`?", "options": ["Extracts type", "Creates type", "Loops", "Maps"], "answer": "Extracts type", "explanation": "Infers part of a type.", "category": "Generics"},
-    {"question": "What is mapped type?", "options": ["{ [K in keyof T]: U }", "Array map", "Runtime", "Both"], "answer": "{ [K in keyof T]: U }", "explanation": "Transforms properties.", "category": "Generics"},
-    {"question": "What is `Partial<T>`?", "options": ["Makes all props optional", "Removes props", "Adds props", "Clones"], "answer": "Makes all props optional", "explanation": "Utility type.", "category": "Generics"},
-    {"question": "What is `ReturnType<T>`?", "options": ["Extracts function return type", "Parameter types", "Both", "Neither"], "answer": "Extracts function return type", "explanation": "Built-in utility.", "category": "Generics"},
+  // Classes (10)
+  {
+    "question": "How do you define a public property in a class?",
+    "options": ["public name: string", "name: string", "Both", "private name: string"],
+    "answer": "Both",
+    "difficulty": "Easy",
+    "explanation": "Public is default; explicit keyword is optional.",
+    "category": "Classes"
+  },
+  {
+    "question": "What does 'protected' access mean?",
+    "options": ["Accessible in subclass", "Accessible only in same class", "Accessible anywhere", "Accessible in same module"],
+    "answer": "Accessible in subclass",
+    "difficulty": "Easy",
+    "explanation": "Protected members are visible to derived classes.",
+    "category": "Classes"
+  },
+  {
+    "question": "Can you use 'readonly' in class fields?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "readonly name: string = 'TS';",
+    "category": "Classes"
+  },
+  {
+    "question": "What is parameter property shorthand?",
+    "options": ["public constructor(public name: string) {}", "constructor(name: string) { this.name = name }", "Both", "None"],
+    "answer": "Both",
+    "difficulty": "Medium",
+    "explanation": "The shorthand declares and initializes in one line.",
+    "category": "Classes"
+  },
+  {
+    "question": "How do you implement an interface in a class?",
+    "options": ["implements", "extends", "uses", "inherits"],
+    "answer": "implements",
+    "difficulty": "Easy",
+    "explanation": "class User implements Person { ... }",
+    "category": "Classes"
+  },
+  {
+    "question": "What is an abstract class?",
+    "options": ["Cannot be instantiated directly", "Can have abstract methods", "Both", "None"],
+    "answer": "Both",
+    "difficulty": "Medium",
+    "explanation": "Abstract classes provide base implementations with required overrides.",
+    "category": "Classes"
+  },
+  {
+    "question": "Can static members be typed?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "static version: string = '1.0';",
+    "category": "Classes"
+  },
+  {
+    "question": "What does 'super()' call?",
+    "options": ["Parent class constructor", "Current class constructor", "Interface constructor", "Global constructor"],
+    "answer": "Parent class constructor",
+    "difficulty": "Easy",
+    "explanation": "Required in derived class constructors.",
+    "category": "Classes"
+  },
+  {
+    "question": "Can classes have index signatures?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Hard",
+    "explanation": "class Dict { [key: string]: number }",
+    "category": "Classes"
+  },
+  {
+    "question": "Which decorator is class-level?",
+    "options": ["@Component", "@Input", "@Output", "@HostListener"],
+    "answer": "@Component",
+    "difficulty": "Medium",
+    "explanation": "Applied to the class constructor.",
+    "category": "Classes"
+  },
 
-    # Enums (10)
-    {"question": "What is default enum start?", "options": ["0", "1", "undefined", "null"], "answer": "0", "explanation": "Numeric enums start at 0.", "category": "Enums"},
-    {"question": "Can enum have string values?", "options": ["Yes", "No", "Only numeric", "Only const"], "answer": "Yes", "explanation": "String enums exist.", "category": "Enums"},
-    {"question": "What is `const enum`?", "options": ["Inlined at compile time", "Preserved", "Runtime object", "Mutable"], "answer": "Inlined at compile time", "explanation": "No runtime code.", "category": "Enums"},
-    {"question": "Can enum be reverse-mapped?", "options": ["Yes, for numeric", "Yes, for string", "Never", "Always"], "answer": "Yes, for numeric", "explanation": "Enum.Name and Enum[0] both work.", "category": "Enums"},
-    {"question": "Are enums types or values?", "options": ["Both", "Only types", "Only values", "Neither"], "answer": "Both", "explanation": "Dual nature.", "category": "Enums"},
-    {"question": "Can enum have computed members?", "options": ["Yes", "No", "Only strings", "Only numbers"], "answer": "Yes", "explanation": "But not in const enum.", "category": "Enums"},
-    {"question": "What is `enum E { A = 1 << 0 }`?", "options": ["Bit flag", "String enum", "Const enum", "Error"], "answer": "Bit flag", "explanation": "Common for flags.", "category": "Enums"},
-    {"question": "Can you loop over enum?", "options": ["Yes", "No", "Only numeric", "Only string"], "answer": "Yes", "explanation": "for...in or Object.keys.", "category": "Enums"},
-    {"question": "Are string enums runtime objects?", "options": ["Yes", "No", "Only in dev", "Only in prod"], "answer": "Yes", "explanation": "Exist in JS output.", "category": "Enums"},
-    {"question": "Can enum extend another?", "options": ["No", "Yes", "Only numeric", "Only string"], "answer": "No", "explanation": "No inheritance.", "category": "Enums"},
+  // Generics (10)
+  {
+    "question": "What is the syntax for a generic function?",
+    "options": ["function id<T>(arg: T): T", "function id(arg: T): T", "function<T> id(arg: T): T", "function id<T>: T"],
+    "answer": "function id<T>(arg: T): T",
+    "difficulty": "Easy",
+    "explanation": "Angle brackets before parameter list.",
+    "category": "Generics"
+  },
+  {
+    "question": "How do you constrain a generic?",
+    "options": ["<T extends string>", "<T = string>", "<T: string>", "<T super string>"],
+    "answer": "<T extends string>",
+    "difficulty": "Easy",
+    "explanation": "Ensures T has at least the members of string.",
+    "category": "Generics"
+  },
+  {
+    "question": "What is a generic interface?",
+    "options": ["interface Box<T> { value: T }", "interface Box = <T> { value: T }", "Both", "None"],
+    "answer": "interface Box<T> { value: T }",
+    "difficulty": "Easy",
+    "explanation": "Can be instantiated with any type: Box<number>.",
+    "category": "Generics"
+  },
+  {
+    "question": "Can generic classes have default types?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Medium",
+    "explanation": "class Cache<T = string> {}",
+    "category": "Generics"
+  },
+  {
+    "question": "What does keyof T return?",
+    "options": ["Union of property names", "Array of keys", "Object with keys", "String literal"],
+    "answer": "Union of property names",
+    "difficulty": "Medium",
+    "explanation": "keyof User → 'id' | 'name'.",
+    "category": "Generics"
+  },
+  {
+    "question": "How do you create a mapped type?",
+    "options": ["{ [P in keyof T]: U }", "{ P in keyof T: U }", "Both", "None"],
+    "answer": "{ [P in keyof T]: U }",
+    "difficulty": "Hard",
+    "explanation": "Transforms each property type.",
+    "category": "Generics"
+  },
+  {
+    "question": "What is conditional type syntax?",
+    "options": ["T extends U ? X : Y", "T extends U => X | Y", "T ? U : X : Y", "T extends U then X else Y"],
+    "answer": "T extends U ? X : Y",
+    "difficulty": "Hard",
+    "explanation": "Resolves to X or Y based on type relationship.",
+    "category": "Generics"
+  },
+  {
+    "question": "Which utility type extracts return type?",
+    "options": ["ReturnType<T>", "Parameters<T>", "InstanceType<T>", "ThisType<T>"],
+    "answer": "ReturnType<T>",
+    "difficulty": "Medium",
+    "explanation": "ReturnType<typeof fn> gives return type.",
+    "category": "Generics"
+  },
+  {
+    "question": "Can generics be used in type aliases?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "type Pair<T, U> = [T, U];",
+    "category": "Generics"
+  },
+  {
+    "question": "What does infer do?",
+    "options": ["Infers a type variable in conditional types", "Creates a new type", "Extends a type", "Merges types"],
+    "answer": "Infers a type variable in conditional types",
+    "difficulty": "Hard",
+    "explanation": "Used in ReturnType: type ReturnType<T> = T extends (...a: any) => infer R ? R : any;",
+    "category": "Generics"
+  },
 
-    # Type Inference (10)
-    {"question": "What is inferred for `let x = 10`?", "options": ["number", "any", "10", "unknown"], "answer": "number", "explanation": "Literal narrows to type.", "category": "Type Inference"},
-    {"question": "What is `const x = 10` inferred as?", "options": ["10", "number", "any", "literal"], "answer": "10", "explanation": "Const preserves literal.", "category": "Type Inference"},
-    {"question": "Does `let x: number = 'hello'` compile?", "options": ["No", "Yes", "Only in JS", "With any"], "answer": "No", "explanation": "Type mismatch.", "category": "Type Inference"},
-    {"question": "What is contextual typing?", "options": ["Type from usage context", "Manual annotation", "Runtime", "Both"], "answer": "Type from usage context", "explanation": "e.g., event handlers.", "category": "Type Inference"},
-    {"question": "What is `best common type`?", "options": ["Widest compatible type", "Narrowest", "any", "unknown"], "answer": "Widest compatible type", "explanation": "For arrays of mixed types.", "category": "Type Inference"},
-    {"question": "Can inference fail?", "options": ["Yes", "No", "Only in functions", "Only in classes"], "answer": "Yes", "explanation": "May fall back to any.", "category": "Type Inference"},
-    {"question": "What is `as const` for?", "options": ["Preserve literals", "Widen types", "Narrow", "Cast"], "answer": "Preserve literals", "explanation": "Deep readonly literals.", "category": "Type Inference"},
-    {"question": "What is inferred for `[]`?", "options": ["never[]", "any[]", "unknown[]", "object[]"], "answer": "never[]", "explanation": "Empty array has no type info.", "category": "Type Inference"},
-    {"question": "Can return type be inferred?", "options": ["Yes", "No", "Only void", "Only any"], "answer": "Yes", "explanation": "From return statements.", "category": "Type Inference"},
-    {"question": "What is `noImplicitAny`?", "options": ["Errors on inferred any", "Allows any", "Ignores any", "Runtime"], "answer": "Errors on inferred any", "explanation": "Strict mode flag.", "category": "Type Inference"},
+  // Enums (10)
+  {
+    "question": "How do you declare a numeric enum?",
+    "options": ["enum Direction { Up, Down }", "enum Direction = { Up, Down }", "const enum Direction { Up }", "type Direction = 'Up' | 'Down'"],
+    "answer": "enum Direction { Up, Down }",
+    "difficulty": "Easy",
+    "explanation": "Members are auto-incremented from 0.",
+    "category": "Enums"
+  },
+  {
+    "question": "Can enum members have explicit values?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "enum Color { Red = 1, Green = 2 }",
+    "category": "Enums"
+  },
+  {
+    "question": "What is a string enum?",
+    "options": ["enum with string values", "enum with number values", "enum with both", "const enum"],
+    "answer": "enum with string values",
+    "difficulty": "Easy",
+    "explanation": "enum Log { Info = 'INFO', Error = 'ERROR' }",
+    "category": "Enums"
+  },
+  {
+    "question": "What does 'const enum' do?",
+    "options": ["Inlines values at compile time", "Generates runtime object", "Prevents export", "Makes enum readonly"],
+    "answer": "Inlines values at compile time",
+    "difficulty": "Medium",
+    "explanation": "No runtime enum object; values are replaced directly.",
+    "category": "Enums"
+  },
+  {
+    "question": "Can enums be reverse-mapped?",
+    "options": ["Yes, for numeric", "Yes, for string", "Both", "No"],
+    "answer": "Yes, for numeric",
+    "difficulty": "Medium",
+    "explanation": "Direction[0] === 'Up' only works for numeric enums.",
+    "category": "Enums"
+  },
+  {
+    "question": "What is heterogeneous enum?",
+    "options": ["Mix of string and number members", "Enum with functions", "Enum with objects", "Computed enum"],
+    "answer": "Mix of string and number members",
+    "difficulty": "Hard",
+    "explanation": "enum Mixed { A = 1, B = 'two' } – discouraged.",
+    "category": "Enums"
+  },
+  {
+    "question": "Can enums have computed members?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Medium",
+    "explanation": "enum File { Name = 'file'.length }",
+    "category": "Enums"
+  },
+  {
+    "question": "Are enums types or values?",
+    "options": ["Both", "Only types", "Only values", "Neither"],
+    "answer": "Both",
+    "difficulty": "Medium",
+    "explanation": "Enum name is a type; members are values.",
+    "category": "Enums"
+  },
+  {
+    "question": "How do you type a variable with enum?",
+    "options": ["let d: Direction", "let d = Direction", "Both", "let d as Direction"],
+    "answer": "let d: Direction",
+    "difficulty": "Easy",
+    "explanation": "Restricts to enum member values.",
+    "category": "Enums"
+  },
+  {
+    "question": "What is 'preserveConstEnums'?",
+    "options": ["Keeps const enum in emitted code", "Deletes const enum", "Converts to let", "Merges enums"],
+    "answer": "Keeps const enum in emitted code",
+    "difficulty": "Hard",
+    "explanation": "For declaration files; no runtime impact.",
+    "category": "Enums"
+  },
 
-    # Union & Intersection (10)
-    {"question": "What is `string | number`?", "options": ["Union", "Intersection", "Tuple", "Enum"], "answer": "Union", "explanation": "Value is one or the other.", "category": "Union Types"},
-    {"question": "What is `A & B`?", "options": ["Intersection", "Union", "Merge", "Both"], "answer": "Intersection", "explanation": "Must satisfy both.", "category": "Intersection Types"},
-    {"question": "Can you access property on union?", "options": ["Only common props", "Any prop", "No props", "With casting"], "answer": "Only common props", "explanation": "Type narrowing required.", "category": "Union Types"},
-    {"question": "What is discriminated union?", "options": ["Union with tag property", "Any union", "Intersection", "Enum"], "answer": "Union with tag property", "explanation": "e.g., { kind: 'square' }", "category": "Union Types"},
-    {"question": "What is `never` in unions?", "options": ["Eliminates impossible branches", "Always included", "Error", "Any"], "answer": "Eliminates impossible branches", "explanation": "Exhaustive checks.", "category": "Union Types"},
-    {"question": "Can intersection have conflicting types?", "options": ["Becomes never", "Allowed", "Merged", "Error"], "answer": "Becomes never", "explanation": "e.g., string & number", "category": "Intersection Types"},
-    {"question": "What is `A extends B ? C : D`?", "options": ["Conditional type", "Union", "Intersection", "Guard"], "answer": "Conditional type", "explanation": "Type-level if.", "category": "Union Types"},
-    {"question": "Can union be used in generics?", "options": ["Yes", "No", "Only string", "Only number"], "answer": "Yes", "explanation": "Distributive.", "category": "Union Types"},
-    {"question": "What is distributive conditional?", "options": ["Applies to each union member", "Once to whole", "Error", "Runtime"], "answer": "Applies to each union member", "explanation": "Default behavior.", "category": "Union Types"},
-    {"question": "What is `Extract<T, U>`?", "options": ["Subset of T assignable to U", "All of T", "None", "Union"], "answer": "Subset of T assignable to U", "explanation": "Utility type.", "category": "Union Types"},
+  // Type Inference (5)
+  {
+    "question": "What type is inferred for 'let x = 10'?",
+    "options": ["number", "10", "any", "unknown"],
+    "answer": "number",
+    "difficulty": "Easy",
+    "explanation": "Literal widens to primitive type.",
+    "category": "Type Inference"
+  },
+  {
+    "question": "What is inferred for 'const x = 10'?",
+    "options": ["10", "number", "any", "literal"],
+    "answer": "10",
+    "difficulty": "Medium",
+    "explanation": "const preserves literal type.",
+    "category": "Type Inference"
+  },
+  {
+    "question": "Does TS infer return type of functions?",
+    "options": ["Yes", "No", "Only with --noImplicitAny", "Only in .ts files"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "function add(a, b) { return a + b } → (a: number, b: number) => number",
+    "category": "Type Inference"
+  },
+  {
+    "question": "What is contextual typing?",
+    "options": ["Infer type from assignment context", "Infer from file context", "Infer from module", "Infer from compiler"],
+    "answer": "Infer type from assignment context",
+    "difficulty": "Medium",
+    "explanation": "window.onmousedown = (e) => { e.button; } → e is MouseEvent",
+    "category": "Type Inference"
+  },
+  {
+    "question": "Can you force wider inference?",
+    "options": ["Yes, with type assertion", "No"],
+    "answer": "Yes, with type assertion",
+    "difficulty": "Medium",
+    "explanation": "let x = 10 as number; widens from 10.",
+    "category": "Type Inference"
+  },
 
-    # Type Guards (10)
-    {"question": "What is `typeof x === 'string'`?", "options": ["Type guard", "Runtime check", "Both", "Neither"], "answer": "Both", "explanation": "Narrows type.", "category": "Type Guards"},
-    {"question": "What is `x is string`?", "options": ["User-defined type guard", "Built-in", "Runtime", "Error"], "answer": "User-defined type guard", "explanation": "Return type predicate.", "category": "Type Guards"},
-    {"question": "What is `in` operator guard?", "options": ["'name' in obj", "'name' in string", "Both", "Neither"], "answer": "'name' in obj", "explanation": "Checks property existence.", "category": "Type Guards"},
-    {"question": "What is `instanceof`?", "options": ["Class check", "Type check", "Both", "Neither"], "answer": "Class check", "explanation": "Runtime constructor.", "category": "Type Guards"},
-    {"question": "Can type guard narrow union?", "options": ["Yes", "No", "Only string", "Only number"], "answer": "Yes", "explanation": "Core feature.", "category": "Type Guards"},
-    {"question": "What is exhaustive check?", "options": ["default: never", "if/else", "switch", "All"], "answer": "default: never", "explanation": "Catches missing cases.", "category": "Type Guards"},
-    {"question": "Can type guard be async?", "options": ["No", "Yes", "Only in TS 4", "Only with await"], "answer": "No", "explanation": "Must be sync.", "category": "Type Guards"},
-    {"question": "What is assertion function?", "options": ["asserts condition", "throws", "Both", "Neither"], "answer": "asserts condition", "explanation": "Narrows after call.", "category": "Type Guards"},
-    {"question": "What is `x!`?", "options": ["Non-null assertion", "Type guard", "Both", "Neither"], "answer": "Non-null assertion", "explanation": "Not a guard.", "category": "Type Guards"},
-    {"question": "Can type guard narrow generics?", "options": ["Yes", "No", "Only in functions", "Only in classes"], "answer": "Yes", "explanation": "With constraints.", "category": "Type Guards"},
+  // Union & Intersection (10)
+  {
+    "question": "How do you declare a union type?",
+    "options": ["string | number", "string & number", "string + number", "string || number"],
+    "answer": "string | number",
+    "difficulty": "Easy",
+    "explanation": "Value can be either type.",
+    "category": "Union and Intersection Types"
+  },
+  {
+    "question": "What is an intersection type?",
+    "options": ["A & B", "A | B", "A + B", "A, B"],
+    "answer": "A & B",
+    "difficulty": "Easy",
+    "explanation": "Combines members of both types.",
+    "category": ": "Union and Intersection Types"
+  },
+  {
+    "question": "Which properties are safe on a union?",
+    "options": ["Only common properties", "All properties", "None", "Only optional"],
+    "answer": "Only common properties",
+    "difficulty": "Easy",
+    "explanation": "string | number → only .toString(), .valueOf()",
+    "category": "Union and Intersection Types"
+  },
+  {
+    "question": "Can you narrow a union?",
+    "options": ["Yes, with type guards", "No"],
+    "answer": "Yes, with type guards",
+    "difficulty": "Easy",
+    "explanation": "if (typeof x === 'string') { x.length }",
+    "category": "Union and Intersection Types"
+  },
+  {
+    "question": "What is a discriminated union?",
+    "options": ["Union with a common literal property", "Union of interfaces", "Union of classes", "All of the above"],
+    "answer": "Union with a common literal property",
+    "difficulty": "Medium",
+    "explanation": "type Shape = Circle | Square; both have 'kind': 'circle' | 'square'",
+    "category": "Union and Intersection Types"
+  },
+  {
+    "question": "What does never & string resolve to?",
+    "options": ["never", "string", "any", "unknown"],
+    "answer": "never",
+    "difficulty": "Hard",
+    "explanation": "Intersection with never is always never.",
+    "category": "Union and Intersection Types"
+  },
+  {
+    "question": "Can intersections be used with primitives?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Medium",
+    "explanation": "string & 'hello' is 'hello'.",
+    "category": "Union and Intersection Types"
+  },
+  {
+    "question": "How do you extract union members?",
+    "options": ["T extends U ? T : never", "Extract<T, U>", "Both", "None"],
+    "answer": "Both",
+    "difficulty": "Hard",
+    "explanation": "Extract<string | number, string> → string",
+    "category": "Union and Intersection Types"
+  },
+  {
+    "question": "What is exhaustive checking?",
+    "options": ["Ensuring all union cases are handled", "Checking all properties", "Runtime validation", "Compile-time loop"],
+    "answer": "Ensuring all union cases are handled",
+    "difficulty": "Medium",
+    "explanation": "Use never in default case to catch missing branches.",
+    "category": "Union and Intersection Types"
+  },
+  {
+    "question": "Can you distribute over unions?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Hard",
+    "explanation": "(A | B) extends C ? X : Y → checks A and B separately.",
+    "category": "Union and Intersection Types"
+  },
 
-    # Decorators (10)
-    {"question": "Are decorators stable?", "options": ["Stage 3", "Stable", "Experimental", "Removed"], "answer": "Stage 3", "explanation": "Need `--experimentalDecorators`.", "category": "Decorators"},
-    {"question": "What is `@log`?", "options": ["Method decorator", "Class", "Property", "Parameter"], "answer": "Method decorator", "explanation": "Wraps method.", "category": "Decorators"},
-    {"question": "Can decorator be on parameter?", "options": ["Yes", "No", "Only class", "Only method"], "answer": "Yes", "explanation": "Rarely used.", "category": "Decorators"},
-    {"question": "What is decorator factory?", "options": ["Function returning decorator", "Decorator itself", "Class", "Interface"], "answer": "Function returning decorator", "explanation": "e.g., `@debounce(100)`", "category": "Decorators"},
-    {"question": "What is first arg to method decorator?", "options": ["target", "propertyKey", "descriptor", "All"], "answer": "All", "explanation": "Standard signature.", "category": "Decorators"},
-    {"question": "Can decorator modify property?", "options": ["Yes", "No", "Only methods", "Only classes"], "answer": "Yes", "explanation": "Via descriptor.", "category": "Decorators"},
-    {"question": "What is `@Component` in Angular?", "options": ["Class decorator", "Method", "Property", "Parameter"], "answer": "Class decorator", "explanation": "Defines component.", "category": "Decorators"},
-    {"question": "Are decorators runtime or compile?", "options": ["Runtime", "Compile only", "Both", "Neither"], "answer": "Runtime", "explanation": "Exist in JS.", "category": "Decorators"},
-    {"question": "Can decorator throw?", "options": ["Yes", "No", "Only in dev", "Only in prod"], "answer": "Yes", "explanation": "Affects runtime.", "category": "Decorators"},
-    {"question": "What is metadata?", "options": ["reflect-metadata", "Built-in", "TypeScript", "Both"], "answer": "reflect-metadata", "explanation": "Separate package.", "category": "Decorators"},
+  // Type Guards (10)
+  {
+    "question": "What is 'typeof' type guard?",
+    "options": ["typeof x === 'string'", "x instanceof String", "x is string", "'length' in x"],
+    "answer": "typeof x === 'string'",
+    "difficulty": "Easy",
+    "explanation": "Narrows primitives.",
+    "category": "Type Guards"
+  },
+  {
+    "question": "What is 'instanceof' guard?",
+    "options": ["x instanceof Date", "typeof x === Date", "x is Date", "Date in x"],
+    "answer": "x instanceof Date",
+    "difficulty": "Easy",
+    "explanation": "Narrows to class instances.",
+    "category": "Type Guards"
+  },
+  {
+    "question": "What is 'in' operator guard?",
+    "options": ["'name' in x", "x.has('name')", "x.name exists", "nameof x"],
+    "answer": "'name' in x",
+    "difficulty": "Easy",
+    "explanation": "Checks property existence.",
+    "category": "Type Guards"
+  },
+  {
+    "question": "How do you write a user-defined type guard?",
+    "options": ["function isString(x: any): x is string", "function isString(x: any): boolean", "Both", "function isString<T>(x: T): x is string"],
+    "answer": "function isString(x: any): x is string",
+    "difficulty": "Medium",
+    "explanation": "Return type predicate 'x is string' narrows.",
+    "category": "Type Guards"
+  },
+  {
+    "question": "Can type guards be used in generics?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Medium",
+    "explanation": "function isArray<T>(x: T[]): x is T[]",
+    "category": "Type Guards"
+  },
+  {
+    "question": "What is a literal type guard?",
+    "options": ["x === 'admin'", "typeof x === 'string'", "x is 'admin'", "Both A and C"],
+    "answer": "Both A and C",
+    "difficulty": "Medium",
+    "explanation": "Equality narrows to literal type.",
+    "category": "Type Guards"
+  },
+  {
+    "question": "Do type guards work in switch?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "Discriminated unions narrow per case.",
+    "category": "Type Guards"
+  },
+  {
+    "question": "Can you guard against null/undefined?",
+    "options": ["x != null", "x !== null && x !== undefined", "Both", "x is defined"],
+    "answer": "Both",
+    "difficulty": "Easy",
+    "explanation": "Non-null assertion operator ! also removes null.",
+    "category": "Type Guards"
+  },
+  {
+    "question": "What is assertion signature?",
+    "options": ["function assert(x: any): asserts x is string", "function assert(x: string)", "Both", "None"],
+    "answer": "function assert(x: any): asserts x is string",
+    "difficulty": "Hard",
+    "explanation": "Throws if condition false; narrows afterward.",
+    "category": "Type Guards"
+  },
+  {
+    "question": "Can type guards narrow unions in arrays?",
+    "options": ["Yes, with .filter()", "No"],
+    "answer": "Yes, with .filter()",
+    "difficulty": "Medium",
+    "explanation": "arr.filter(isString) → string[]",
+    "category": "Type Guards"
+  },
+
+  // Decorators (10)
+  {
+    "question": "Which flag enables decorators?",
+    "options": ["experimentalDecorators", "enableDecorators", "decorators", "useDecorators"],
+    "answer": "experimentalDecorators",
+    "difficulty": "Easy",
+    "explanation": "Still experimental; required in tsconfig.",
+    "category": "Decorators"
+  },
+  {
+    "question": "How many arguments does a class decorator receive?",
+    "options": ["1 (constructor)", "0", "2", "3"],
+    "answer": "1 (constructor)",
+    "difficulty": "Easy",
+    "explanation": "@sealed function sealed(ctor: Function) {}",
+    "category": "Decorators"
+  },
+  {
+    "question": "What is a method decorator signature?",
+    "options": ["(target, key, descriptor)", "(target, descriptor)", "(key, descriptor)", "(target, key)"],
+    "answer": "(target, key, descriptor)",
+    "difficulty": "Medium",
+    "explanation": "key is string | symbol, descriptor is PropertyDescriptor.",
+    "category": "Decorators"
+  },
+  {
+    "question": "Can decorators be applied to parameters?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "function method(@Inject() service: Service) {}",
+    "category": "Decorators"
+  },
+  {
+    "question": "What is decorator composition?",
+    "options": ["@A @B class C {}", "Multiple decorators on one target", "Both", "Decorator returning decorator"],
+    "answer": "Both",
+    "difficulty": "Medium",
+    "explanation": "Applied bottom-up, executed top-down.",
+    "category": "Decorators"
+  },
+  {
+    "question": "What is a decorator factory?",
+    "options": ["Function that returns a decorator", "Decorator that creates classes", "Built-in decorator", "None"],
+    "answer": "Function that returns a decorator",
+    "difficulty": "Medium",
+    "explanation": "function log(prefix) { return (target) => {...} }",
+    "category": "Decorators"
+  },
+  {
+    "question": "Can decorators modify property initializers?",
+    "options": ["Yes, via descriptor", "No"],
+    "answer": "Yes, via descriptor",
+    "difficulty": "Hard",
+    "explanation": "Return new descriptor with value or get/set.",
+    "category": "Decorators"
+  },
+  {
+    "question": "What is metadata emitted with decorators?",
+    "options": ["reflect-metadata", "ts-metadata", "decorator-metadata", "meta-ts"],
+    "answer": "reflect-metadata",
+    "difficulty": "Medium",
+    "explanation": "Requires 'emitDecoratorMetadata' and npm package.",
+    "category": "Decorators"
+  },
+  {
+    "question": "Which decorator order is execution order?",
+    "options": ["Top to bottom", "Bottom to top"],
+    "answer": "Bottom to top",
+    "difficulty": "Hard",
+    "explanation": "@A @B → B runs first, then A.",
+    "category": "Decorators"
+  },
+  {
+    "question": "Can decorators be used in plain TS libraries?",
+    "options": ["Yes", "No"],
+    "answer": "Yes",
+    "difficulty": "Easy",
+    "explanation": "Common in Angular, NestJS, TypeORM, etc.",
+    "category": "Decorators"
+  }
 ]
 # Ensure exactly 100 questions
 assert len(quiz) == 100, f"Expected 100 questions, got {len(quiz)}"
