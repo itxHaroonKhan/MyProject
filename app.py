@@ -3,276 +3,280 @@ import random
 from datetime import datetime, timedelta
 import uuid
 
-# Quiz data - Reduced for stability
+# Set page config
+st.set_page_config(page_title="TypeScript Quiz - 100 Questions", page_icon="🟦", layout="centered")
+
+# Quiz data (your full 100 questions)
 quiz = [
+    # ... (paste your full quiz list here - I'll show the structure, you already have it)
+    # For brevity, I'm showing only the first and last, but YOU MUST INCLUDE ALL 100
     {
-        "question": "What is the output of: ```typescript\nlet x: number = 10; console.log(x * 2);```",
-        "options": ["20", "10", "Error", "undefined"],
-        "answer": "20",
+        "question": "What is TypeScript?",
+        "options": [
+            "A superset of JavaScript that adds static typing",
+            "A new programming language unrelated to JavaScript",
+            "A JavaScript framework for building UIs",
+            "A database query language"
+        ],
+        "answer": "A superset of JavaScript that adds static typing",
         "difficulty": "Easy",
-        "explanation": "The variable 'x' is typed as a number, so 'x * 2' computes 20.",
-        "category": "TypeScript"
+        "explanation": "TypeScript is a superset of JavaScript that compiles to plain JavaScript and adds optional static typing.",
+        "category": "TypeScript Basics"
     },
+    # ... ALL OTHER 99 QUESTIONS GO HERE ...
     {
-        "question": "What does TypeScript provide over JavaScript?",
-        "options": ["Static typing", "Runtime execution", "Module bundling", "Code minification"],
-        "answer": "Static typing",
+        "question": "What does the 'target' option specify?",
+        "options": [
+            "The JavaScript version the TypeScript code is compiled to",
+            "The target directory for compiled files",
+            "The target browser",
+            "The target platform"
+        ],
+        "answer": "The JavaScript version the TypeScript code is compiled to",
         "difficulty": "Easy",
-        "explanation": "TypeScript adds static typing to JavaScript, enabling type checking at compile time.",
-        "category": "TypeScript"
-    },
-    # Add more questions as needed, but start with fewer for testing
+        "explanation": "The 'target' in tsconfig.json specifies the ECMAScript version to compile to (e.g., ES5, ES6, ES2020).",
+        "category": "Configuration"
+    }
 ]
 
-# Simplified CSS
+# Ensure exactly 100 questions
+assert len(quiz) == 100, f"Expected 100 questions, got {len(quiz)}"
+
+# Initialize session state
+if 'quiz_state' not in st.session_state:
+    st.session_state.quiz_state = {
+        'quiz_id': str(uuid.uuid4()),
+        'start_time': None,
+        'current_question': 0,
+        'score': 0,
+        'answers': [],
+        'shuffled_questions': random.sample(quiz, len(quiz)),
+        'show_results': False,
+        'selected_option': None,
+        'submitted': False,
+        'time_limit': 60 * 60  # 60 minutes total
+    }
+
+state = st.session_state.quiz_state
+
+# CSS Styling
 st.markdown("""
 <style>
-.main-container {
-    padding: 2rem;
-    border-radius: 1rem;
-    margin: 1rem auto;
-    max-width: 900px;
-}
-
-.title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-}
-
-.stButton>button {
-    background: #6b21a8;
-    color: white;
-    border: none;
-    border-radius: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0.5rem 0;
-    width: 100%;
-}
-
-.stButton>button:hover {
-    background: #8b5cf6;
-}
-
-.progress-bar {
-    background: rgba(0,0,0,0.1);
-    border-radius: 0.5rem;
-    height: 0.75rem;
-    margin: 0.5rem 0;
-    overflow: hidden;
-}
-
-.progress-fill {
-    background: linear-gradient(90deg, #6b21a8, #007aff);
-    height: 100%;
-    border-radius: 0.5rem;
-    transition: width 0.3s ease;
-}
-
-.feedback-correct {
-    background: rgba(52, 199, 89, 0.2);
-    border: 2px solid #34c759;
-    color: #34c759;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin: 1rem 0;
-}
-
-.feedback-wrong {
-    background: rgba(255, 59, 48, 0.2);
-    border: 2px solid #ff3b30;
-    color: #ff3b30;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin: 1rem 0;
-}
+    .big-font { font-size: 24px !important; font-weight: bold; }
+    .question-box { 
+        padding: 20px; 
+        border-radius: 15px; 
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        margin: 20px 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .option-btn {
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 10px;
+        font-size: 16px;
+        text-align: left;
+        border: 2px solid #ddd;
+        transition: all 0.3s;
+    }
+    .option-btn:hover { border-color: #667eea; background: #f0f2ff; }
+    .correct { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+    .incorrect { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+    .progress-bar { height: 30px; border-radius: 15px; }
+    .stProgress > div > div > div > div { background-color: #667eea; }
 </style>
 """, unsafe_allow_html=True)
 
-# Initialize session state
-def initialize_session_state():
-    default_state = {
-        "quiz_data": shuffle_quiz(quiz),
-        "score": 0,
-        "current_q": 0,
-        "start_time": None,
-        "answers": [None] * len(quiz),
-        "show_results": False,
-        "selected_option": None,
-        "feedback": None,
-        "time_left": 3600,
-        "streak": 0,
-        "max_streak": 0,
-        "started": False,
-        "paused": False,
-        "pause_time": None,
-        "quiz_duration": 3600
-    }
-    
-    for key, value in default_state.items():
-        if key not in st.session_state:
-            st.session_state[key] = value
+# Header
+st.markdown("<h1 style='text-align: center; color: #2E86AB;'>🟦 TypeScript Mastery Quiz</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; font-size: 18px;'>100 Questions • 60 Minutes • All Topics</p>", unsafe_allow_html=True)
 
-def shuffle_quiz(_quiz):
-    shuffled = random.sample(_quiz, len(_quiz))
-    for q in shuffled:
-        q["id"] = str(uuid.uuid4())
-        q["display_options"] = q["options"].copy()
-        random.shuffle(q["display_options"])
-        q["labeled_answer"] = q["answer"]
-    return shuffled
-
-def update_timer():
-    if (not st.session_state.paused and st.session_state.start_time and 
-        st.session_state.started and not st.session_state.show_results):
-        elapsed = (datetime.now() - st.session_state.start_time).total_seconds()
-        st.session_state.time_left = max(st.session_state.quiz_duration - elapsed, 0)
-        if st.session_state.time_left <= 0:
-            st.session_state.show_results = True
-
-def reset_quiz():
-    st.session_state.update({
-        "quiz_data": shuffle_quiz(quiz),
-        "score": 0,
-        "current_q": 0,
-        "start_time": None,
-        "answers": [None] * len(quiz),
-        "show_results": False,
-        "selected_option": None,
-        "feedback": None,
-        "time_left": st.session_state.quiz_duration,
-        "streak": 0,
-        "max_streak": 0,
-        "started": False,
-        "paused": False,
-        "pause_time": None
-    })
-
-# Main application
-def main():
-    initialize_session_state()
-    
-    st.markdown('<h1 class="title">🚀 TypeScript Quiz</h1>', unsafe_allow_html=True)
-    
-    # Welcome screen
-    if not st.session_state.started:
-        st.markdown("""
-        <div style="text-align: center; padding: 2rem;">
-            <h2>📋 Quiz Overview</h2>
-            <p><strong>TypeScript Knowledge Test</strong></p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("🎯 Start Quiz", use_container_width=True):
-            st.session_state.started = True
-            st.session_state.start_time = datetime.now()
+# Start Quiz
+if not state['start_time']:
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("🚀 Start Quiz", use_container_width=True, type="primary"):
+            state['start_time'] = datetime.now()
             st.rerun()
-    else:
-        # Timer and progress
-        if not st.session_state.show_results:
-            update_timer()
-            
-            # Timer display
-            minutes = int(st.session_state.time_left // 60)
-            seconds = int(st.session_state.time_left % 60)
-            st.markdown(f'<div style="text-align: center; font-size: 1.5rem; font-weight: bold; margin: 1rem 0;">⏱️ {minutes:02d}:{seconds:02d}</div>', unsafe_allow_html=True)
-        
-        # Progress section
-        total_questions = len(st.session_state.quiz_data)
-        current_q = min(st.session_state.current_q, total_questions - 1)
-        progress = ((current_q + 1) / total_questions) * 100
-        
-        st.markdown(f"""
-        <div style="margin: 1rem 0;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                <span>Question {current_q + 1} of {total_questions}</span>
-                <span>Score: {st.session_state.score}</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: {progress}%"></div>
-            </div>
+
+    st.markdown("### Topics Covered:")
+    topics = list(set(q["category"] for q in quiz))
+    cols = st.columns(3)
+    for i, topic in enumerate(topics):
+        cols[i % 3].markdown(f"• **{topic}**")
+
+    st.info("💡 You can skip questions and return later. Timer runs continuously.")
+    st.stop()
+
+# Timer Logic
+if state['start_time']:
+    elapsed = (datetime.now() - state['start_time']).total_seconds()
+    remaining = max(0, state['time_limit'] - elapsed)
+    minutes = int(remaining // 60)
+    seconds = int(remaining % 60)
+
+    if remaining <= 0:
+        state['show_results'] = True
+        st.rerun()
+
+    # Progress bar
+    progress = (state['current_question'] + 1) / len(quiz)
+    st.progress(progress, text=f"Question {state['current_question'] + 1}/100")
+
+    # Timer display
+    st.markdown(f"""
+    <div style='text-align: center; padding: 10px; background: #ff6b6b; color: white; border-radius: 10px; font-size: 20px; font-weight: bold;'>
+        ⏱️ Time Remaining: {minutes:02d}:{seconds:02d}
+    </div>
+    """, unsafe_allow_html=True)
+
+# Current Question
+if not state['show_results']:
+    q = state['shuffled_questions'][state['current_question']]
+    
+    st.markdown(f"""
+    <div class='question-box'>
+        <div class='big-font'>Question {state['current_question'] + 1}</div>
+        <div style='margin: 15px 0; font-size: 18px;'>
+            <strong>Category:</strong> {q['category']} | <strong>Difficulty:</strong> {q['difficulty']}
         </div>
-        """, unsafe_allow_html=True)
+        <hr style='border: 1px solid rgba(255,255,255,0.3);'>
+        <p style='font-size: 22px; margin: 20px 0;'>{q['question']}</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Store selected option
+    if f"q_{state['current_question']}" not in st.session_state:
+        st.session_state[f"q_{state['current_question']}"] = None
+
+    selected = st.session_state[f"q_{state['current_question']}"]
+
+    for i, option in enumerate(q['options']):
+        key = f"option_{state['current_question']}_{i}"
+        cols = st.columns([4, 1])
         
-        if not st.session_state.show_results:
-            # Question display
-            q = st.session_state.quiz_data[current_q]
-            
-            st.markdown(f"""
-            <div style="background: rgba(0,0,0,0.05); padding: 1.5rem; border-radius: 0.75rem; margin: 1rem 0;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <span style="background: #6b21a8; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem;">{q['difficulty']}</span>
-                    <span style="background: #007aff; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem;">{q['category']}</span>
-                </div>
-                {q['question']}
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # Options
-            for option in q["display_options"]:
-                if st.button(option, key=f"option_{q['id']}_{option}", use_container_width=True):
-                    st.session_state.selected_option = option
-                    is_correct = option == q["answer"]
-                    st.session_state.feedback = {
-                        "message": f"{'✅ Correct!' if is_correct else '❌ Incorrect'} {q['explanation']}",
-                        "type": "correct" if is_correct else "wrong"
-                    }
-                    
-                    if is_correct:
-                        st.session_state.score += 2
-                        st.session_state.streak += 1
-                        st.session_state.max_streak = max(st.session_state.streak, st.session_state.max_streak)
-                    else:
-                        st.session_state.streak = 0
-                    
-                    st.session_state.answers[current_q] = option
-                    st.rerun()
-            
-            # Feedback
-            if st.session_state.feedback:
-                feedback_class = "feedback-correct" if st.session_state.feedback["type"] == "correct" else "feedback-wrong"
-                st.markdown(f'<div class="{feedback_class}">{st.session_state.feedback["message"]}</div>', unsafe_allow_html=True)
-            
-            # Navigation buttons
-            col1, col2 = st.columns(2)
-            with col1:
-                if current_q > 0 and st.button("⬅️ Previous", use_container_width=True):
-                    st.session_state.current_q -= 1
-                    st.session_state.selected_option = st.session_state.answers[st.session_state.current_q]
-                    st.session_state.feedback = None
-                    st.rerun()
-            with col2:
-                if st.session_state.selected_option and st.button("Next ➡️", use_container_width=True):
-                    st.session_state.current_q += 1
-                    if st.session_state.current_q >= total_questions:
-                        st.session_state.show_results = True
-                    else:
-                        st.session_state.selected_option = st.session_state.answers[st.session_state.current_q]
-                        st.session_state.feedback = None
-                    st.rerun()
-                
-            # Add restart button
-            if st.button("🔄 Restart Quiz", use_container_width=True):
-                reset_quiz()
-                st.rerun()
-        else:
-            # Results screen
-            st.markdown(f"""
-            <div style="text-align: center; padding: 2rem;">
-                <h2>🎉 Quiz Completed!</h2>
-                <div style="font-size: 3rem; font-weight: bold; color: #6b21a8; margin: 1rem 0;">
-                    {st.session_state.score}/{(total_questions * 2)}
-                </div>
-                <p>Maximum Streak: 🔥 {st.session_state.max_streak}</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            if st.button("🔄 Take Quiz Again", use_container_width=True):
-                reset_quiz()
+        with cols[0]:
+            if st.button(
+                option,
+                key=key,
+                use_container_width=True,
+                disabled=state.get('submitted', False)
+            ):
+                st.session_state[f"q_{state['current_question']}"] = option
+                selected = option
                 st.rerun()
 
-if __name__ == "__main__":
-    main()
+        with cols[1]:
+            if selected == option:
+                st.markdown("✅")
+
+    # Show feedback if submitted
+    if state.get('submitted', False):
+        user_answer = state['answers'][-1]['user_answer']
+        correct = user_answer == q['answer']
+        
+        if correct:
+            st.success(f"🎉 Correct! +1 point")
+        else:
+            st.error(f"❌ Incorrect. The answer is: **{q['answer']}**")
+
+        with st.expander("📖 Explanation"):
+            st.write(q['explanation'])
+
+    # Navigation
+    col1, col2, col3 = st.columns([1, 2, 1])
+    
+    with col1:
+        if st.button("⬅️ Previous", disabled=state['current_question'] == 0):
+            if state.get('submitted', False):
+                state['answers'].pop()
+            state['current_question'] -= 1
+            state['submitted'] = False
+            st.rerun()
+
+    with col2:
+        if not state.get('submitted', False):
+            if selected:
+                if st.button("✅ Submit Answer", use_container_width=True, type="primary"):
+                    state['answers'].append({
+                        'question_index': state['current_question'],
+                        'user_answer': selected,
+                        'correct': selected == q['answer']
+                    })
+                    if selected == q['answer']:
+                        state['score'] += 1
+                    state['submitted'] = True
+                    st.rerun()
+            else:
+                st.warning("Please select an answer before submitting.")
+        else:
+            if st.button("➡️ Next Question", use_container_width=True):
+                state['current_question'] += 1
+                state['submitted'] = False
+                st.rerun()
+
+    with col3:
+        if st.button("🏁 Finish Quiz", type="secondary"):
+            if len(state['answers']) < len(quiz):
+                if st.warning("You haven't answered all questions. Finish anyway?"):
+                    state['show_results'] = True
+                    st.rerun()
+            else:
+                state['show_results'] = True
+                st.rerun()
+
+# Results Page
+if state['show_results']:
+    st.balloons()
+    st.markdown("<h2 style='text-align: center;'>🎊 Quiz Complete! 🎊</h2>", unsafe_allow_html=True)
+    
+    score = state['score']
+    percentage = (score / len(quiz)) * 100
+    
+    st.markdown(f"""
+    <div style='text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 20px; margin: 20px 0;'>
+        <h1>{score}/100</h1>
+        <h3>{percentage:.1f}% Correct</h3>
+        <p>Time taken: {timedelta(seconds=int((datetime.now() - state['start_time']).total_seconds()))}</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Performance by category
+    category_stats = {}
+    for ans in state['answers']:
+        q_idx = ans['question_index']
+        q = state['shuffled_questions'][q_idx]
+        cat = q['category']
+        if cat not in category_stats:
+            category_stats[cat] = {'correct': 0, 'total': 0}
+        category_stats[cat]['total'] += 1
+        if ans['correct']:
+            category_stats[cat]['correct'] += 1
+
+    st.markdown("### 📊 Performance by Category")
+    for cat, stats in category_stats.items():
+        pct = (stats['correct'] / stats['total']) * 100
+        st.markdown(f"**{cat}**: {stats['correct']}/{stats['total']} ({pct:.0f}%)")
+
+    # Show incorrect answers
+    incorrect = [a for a in state['answers'] if not a['correct']]
+    if incorrect:
+        st.markdown("### ❌ Review Incorrect Answers")
+        for ans in incorrect:
+            q = state['shuffled_questions'][ans['question_index']]
+            with st.expander(f"Q{ans['question_index'] + 1}: {q['question'][:60]}..."):
+                st.write(f"**Your answer:** {ans['user_answer']}")
+                st.write(f"**Correct answer:** {q['answer']}")
+                st.info(q['explanation'])
+
+    # Restart
+    if st.button("🔄 Take Quiz Again", use_container_width=True):
+        for key in list(st.session_state.keys()):
+            del st.session_state[key]
+        st.rerun()
+
+# Footer
+st.markdown("---")
+st.markdown("<p style='text-align: center; color: #666;'>Made with ❤️ using Streamlit | TypeScript Quiz v1.0</p>", unsafe_allow_html=True)
